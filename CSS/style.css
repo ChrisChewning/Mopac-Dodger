@@ -1,0 +1,39 @@
+
+
+body {
+  margin: 0;
+  background-color: white;
+}
+
+#container {
+  position: relative;
+  vertical-align: middle;
+margin-top: 10%;
+width: 100%;
+height: 80%;
+/* max-width: 100%; */
+display: flex;
+align-items: center;
+justify-content: center;
+  background-color: #66ffff;
+
+}
+
+
+#canvas {
+  width: 100%;
+  height: 450px;
+  padding: 0;
+  border: solid black 9px;
+  background-image: url('https://opengameart.org/sites/default/files/Toon%20Road%20Texture.png');
+  background-size: 100%;
+   background-repeat: repeat;
+   background-size: contain;
+  /* object-fit: cover; */
+}
+   /* background-position: 50% 50%; */
+    /*img from: https://www.davidstenfors.com/  */
+    /* width: window.innerWidth; */
+    /* border: 1px solid black; */
+    /* margin-top: 150px; */
+}
