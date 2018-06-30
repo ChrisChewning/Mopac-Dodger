@@ -7,35 +7,40 @@ var c = canvas.getContext('2d');
 
 // TUMBLEWEED IMAGE VARIABLE
 let tumbleweedImage = new Image();
-tumbleweedImage.src = 'https://d30y9cdsu7xlg0.cloudfront.net/png/28479-200.png';
+tumbleweedImage.src = 'https://i.imgur.com/jTqxjp1.png';
 // c.drawImage(tumbleweedImage, 0, 0);
 
 //CAR IMAGE VARIABLE
 let carImage = new Image();
 // carImage.src = images/car.png
-carImage.src = 'http://icons.iconarchive.com/icons/iconsmind/outline/256/Car-2-icon.png';
+carImage.src = 'https://i.imgur.com/WYFaKX3.png';
 // c.drawImage(carImage, 0, 0);
 
 //TRUCK IMAGE VARIABLE
 let truckImage = new Image();
-truckImage.src = 'http://downloadicons.net/sites/default/files/truck-icon-50351.png';
+truckImage.src = 'https://i.imgur.com/ML2VTl4.png';
 // c.drawImage(truckImage, 0, 0);
 
 //BULLDOZER IMAGE VARIABLE
 let bulldozerImage = new Image();
-bulldozerImage.src = 'https://cdn.iconscout.com/public/images/icon/premium/png-512/bulldozer-3f0d911e1d492e9a-512x512.png'
+bulldozerImage.src = 'https://i.imgur.com/NiY5TTh.png'
+
+let vanImage = new Image();
+vanImage.src = 'https://i.imgur.com/uBO8u9w.png'
 
 
 //----------------------  Starting Points & Velocities  ------------------------
 
-let tumbleweed = 700;
+let tumbleweed = 400;  //R - L
 let dtumbleweed = 1;
-let car = 0; //starting point
+let car = 0;  //L-R
 let dcar = 3; //velocity
-let truck = 400; //starting point
+let truck = 0; //L-R
 let dtruck = 2;
-let bulldozer = 0;
+let bulldozer = 0; //L-R
 let dbulldozer = 2;
+let van = 400;  //R-L
+let dvan = 2.5;
 
 
 //----------------------  ANIMATE FUNCTION DRAWS THINGS  -----------------------
@@ -48,8 +53,10 @@ const animate = () => {
   // x-axis, y-axis, width, height
   c.drawImage(tumbleweedImage, tumbleweed, 60, 35, 35);
   c.drawImage(carImage, car, 20, 35, 35); //x, y, how wide, how tall
-  c.drawImage(truckImage, truck, 60, 35, 35); //x, y, how wide, how tall
+  c.drawImage(truckImage, truck, 80, 35, 35); //x, y, how wide, how tall
   c.drawImage(bulldozerImage, bulldozer, 100, 35, 35);
+  c.drawImage(vanImage, van, 40, 35, 35)
+
 
 
   // // for (var i = 0; i < 299; i++) {
@@ -71,8 +78,9 @@ const animate = () => {
 
   tumbleweed -= dtumbleweed;
   car += dcar; //dx goes in a velocity one way or the other.
-  truck -= dtruck;
+  truck += dtruck;
   bulldozer += dbulldozer;
+  van -= dvan;
   console.log('hi');
 }
 animate(); //calls the function.
