@@ -1,68 +1,59 @@
 // window.onLoad = function() {
 
+// swal({
+//   title: "Good job!",
+//   text: "You clicked the button!",
+//   icon: "success",
+// });
+
+let score = 0;
+
+swal({
+          title: "Ah, no good!!",
+          text: "Nope! You Scored: " + score,
+          type: "success",
+          confirmButtonText: "Play Again"
+        });
 
 const canvas = document.querySelector('canvas'); //DOM selector
 //jQuery selector needed instead
 var c = canvas.getContext('2d');
 
 
-
 class Vehicle {
-  constructor(name, speed, direction, xPosition, yPosition, width, height){
-  this.name = name;
-  this.speed = speed;
-  this.direction = direction;
-  this.xPosition = xPosition;
-  this.yPosition = yPosition;
-  this.width = width;
-  this.height = height;
+  constructor(name, speed, direction, xPosition, yPosition, width, height) {
+    this.name = name;
+    this.speed = speed;
+    this.direction = direction;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.width = width;
+    this.height = height;
+  }
 }
-}
 
-  const sprite = new Vehicle('sprite', .5, 'right', 100, 40, 40, 40)
+const sprite = new Vehicle('sprite', .5, 'right', 100, 40, 40, 40)
 
-
-  // tFly.reset = function(){
-  //  //set new random position
-  //  newX = Math.random() * this.cWidth;
-  //  newY = Math.random() * this.cHeight;
-  //  this.setPosition(newX, newY);
-  // } // end reset
-  //  tFly.reset();
-
-
-// const reset = () => {
-//   this.xPosition = 100;
-//   this.yPosition = 40;
-// }
 const reset = () => {
   sprite.xPosition = 100;
   sprite.yPosition = 40;
 }
 
-  //
-  // reset(xPosition, yPosition) {
-      // x.Position =
-      // y.Position =
-  //   }
-
 //WANT 10 vehicles
 
 //VEHICLES
-  const car = new Vehicle('car', 1.5, 'right', 0, 20, 50, 50);
-  const truck = new Vehicle('truck', .5, 'right', 0, 80, 50,50);
-  const bulldozer = new Vehicle('bulldozer', .5, 'right', 0, 100, 500, 500);
-  const van = new Vehicle('van', 1, 'left', 100, 40, 60, 60);
-  const tumbleweed = new Vehicle('tumbleweed', 1, 'left', 400, 60, 50, 50);
-
-
-
-
-
+const car = new Vehicle('car', 1.5, 'right', 0, 20, 128, 128);
+const truck = new Vehicle('truck', .5, 'right', 0, 80, 50, 50);
+const bulldozer = new Vehicle('bulldozer', .5, 'right', 0, 100, 64, 64);
+const van = new Vehicle('van', 1, 'left', 100, 40, 60, 60);
+const tumbleweed = new Vehicle('tumbleweed', 1, 'left', 400, 60, 50, 50);
 console.log(Vehicle);
 
 
+
 // ------------------------ IMAGE VARIABLES ------------------------------
+
+//Could put in different js file, then load into here.
 
 //SPRITE IMAGE VARIABLE
 let spriteImage = new Image();
@@ -73,7 +64,7 @@ let tumbleweedImage = new Image();
 tumbleweedImage.src = 'https://i.imgur.com/jTqxjp1.png';
 //CAR IMAGE VARIABLE
 let carImage = new Image();
-carImage.src = 'https://i.imgur.com/WYFaKX3.png';
+carImage.src = 'http://icons-for-free.com/free-icons/png/128/67528.png';
 //TRUCK IMAGE VARIABLE
 let truckImage = new Image();
 truckImage.src = 'https://i.imgur.com/ML2VTl4.png';
@@ -103,7 +94,7 @@ const animate = () => {
 
 
   //------------------------  MAKE THE VEHICLES MOVE  --------------------------
-              //Remember: -= or += determine the direction.
+  //Remember: -= or += determine the direction.
 
   tumbleweed.xPosition -= tumbleweed.speed;
   car.xPosition += car.speed;
@@ -132,44 +123,15 @@ function moveSprite(e) {
     canvas.width = canvas.width; //resets the canvas.
   }
   if (sprite.yPosition <= -35) {
-    // alert('hi');
-    reset();
-    // sprite.reset(sprite.xPosition, sprite.yPosition); // Go back to the start
-    // score++; // Score increases;
-    // $("#score").text(score);
+    reset(); // alert('hi'); for testing. COULD TURN THEM AROUND INSTEAD.
+    score++; // Score increases;
+    $("#score").text(score);
   }
   (console.log(sprite));
 }
 animate();
 document.onkeydown = moveSprite; //do not put () here.
 
-//REACHED SAFETY?
-
-
-// // Resets the player sprite back to the initial position
-
-//
-//   // The player position resets when they reach the water
-//   update() {
-//     // Is the water reached?
-//
-//
-    // if (sprite.yPosition <= -35) {
-    //   this.reset(startPositionX, startPositionY); // Go back to the start
-    //   score++; // Score increases;
-    //   $("#score").text(score);
-    // }
-//   }
-
-
-// update() {
-//    // Is the water reached?
-//    if (this.y <= 0) {
-//      this.reset(startPositionX, startPositionY); // Go back to the start
-//      score++; // Score increases;
-//      $("#score").text(score);
-//    }
-// }
 
 
 //Could make them stop with these codes inside the function.
@@ -179,41 +141,37 @@ document.onkeydown = moveSprite; //do not put () here.
 
 
 
-// COLLISION DETECTION
+//-----------------------  COLLISION DETECTION FUNCTION  -----------------------
+
+// const detectCollision = () => {
 
 
-//COLLISION CHECKER
-// const COLLIDED = 50; // Collision
+//https://codereview.stackexchange.com/questions/160801/frogger-html5-javascript-canvas-game-using-object-oriented-design
+   //     if (v.find(v =>
+   //         (v.y >= this.y - 10) &&
+   //         (v.y <= this.y) &&
+   //         (v.x >= this.x - (v.length))
+   //         && (v.x <= this.x - 14))
+   //     ) {
+   //         loseLife();
+   //         resetPosition();
+   //     }
+   // }
+
+
+//this wouldn't work b.c this is whether a value is greater than another one.
+   // if (vehicle.xPosition >= sprite.xPosition || vehicle.yPosition >= sprite.yPosition)
 
 
 
-//SPEEDS FOR OBJECTS IN CLASS
-// const speeds = [300, 230, 400]; // Starting speeds
 
 
-//SCORE
-// let score = 0; // Starting score - 0
+//OPTION 1: put boundaries on each image. https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+//OPTION 2: put the 'enemies' into an array. Loop through the array, checking if they've hit the sprite.
+
+// const collision = (enemies, sprite) => {
 //
+// }
 
-
-
-
-
-
-
-
-// Need to reset the player's direction. Turn them around. OR you can reset them back to the beginning, like below...
-
-// reset(x, y) {
-//    this.x = x;
-//    this.y = y;
-//  }
-//
-//  // The player position resets when they reach the water
-
-
-
-//to get a point
-// water -y axis is 450.
-
-//
+//OPTION 3: get bounding client rec().left .right .top .bottom
