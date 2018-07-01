@@ -6,11 +6,11 @@
 //   icon: "success",
 // });
 
-let score = 0;
+let player2Score = 10;
 
 swal({
           title: "Ah, no good!!",
-          text: "Nope! You Scored: " + score,
+          text: "Nope! You Scored: " + player2Score,
           type: "success",
           confirmButtonText: "Play Again"
         });
@@ -123,15 +123,21 @@ function moveSprite(e) {
     canvas.width = canvas.width; //resets the canvas.
   }
   if (sprite.yPosition <= -35) {
-    reset(); // alert('hi'); for testing. COULD TURN THEM AROUND INSTEAD.
-    score++; // Score increases;
-    $("#score").text(score);
+     // alert('hi'); for testing. COULD TURN THEM AROUND INSTEAD.
+    player2Score++; // Score increases;
+    reset();
+    $("#player2Score").text('Player 2\'s score is: ' + player2Score);
+    console.log(player2Score);
   }
   (console.log(sprite));
 }
 animate();
 document.onkeydown = moveSprite; //do not put () here.
 
+
+// const $player2Score = $('player2Score')
+// $('#player2Score').text('Player 2\'s score is: ' + player2Score);
+console.log(player2Score);
 
 
 //Could make them stop with these codes inside the function.
