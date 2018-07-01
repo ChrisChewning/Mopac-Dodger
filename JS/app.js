@@ -31,11 +31,14 @@ class Vehicle {
   //  tFly.reset();
 
 
+// const reset = () => {
+//   this.xPosition = 100;
+//   this.yPosition = 40;
+// }
 const reset = () => {
-  this.xPosition = 100;
-  this.yPosition = 40;
+  sprite.xPosition = 100;
+  sprite.yPosition = 40;
 }
-
 
   //
   // reset(xPosition, yPosition) {
@@ -128,9 +131,9 @@ function moveSprite(e) {
     console.log(e.keycode);
     canvas.width = canvas.width; //resets the canvas.
   }
-  if (sprite.yPosition < -35) {
+  if (sprite.yPosition <= -35) {
     // alert('hi');
-    reset(sprite);
+    reset();
     // sprite.reset(sprite.xPosition, sprite.yPosition); // Go back to the start
     // score++; // Score increases;
     // $("#score").text(score);
@@ -144,21 +147,18 @@ document.onkeydown = moveSprite; //do not put () here.
 
 
 // // Resets the player sprite back to the initial position
-//   reset(x, y) {
-//     this.x = x;
-//     this.y = y;
-//   }
+
 //
 //   // The player position resets when they reach the water
 //   update() {
 //     // Is the water reached?
 //
 //
-//     if (this.y <= 0) {
-//       this.reset(startPositionX, startPositionY); // Go back to the start
-//       score++; // Score increases;
-//       $("#score").text(score);
-//     }
+    // if (sprite.yPosition <= -35) {
+    //   this.reset(startPositionX, startPositionY); // Go back to the start
+    //   score++; // Score increases;
+    //   $("#score").text(score);
+    // }
 //   }
 
 
