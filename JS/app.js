@@ -1,54 +1,72 @@
 // window.onLoad = function() {
 
-// swal({
-//   title: "Good job!",
-//   text: "You clicked the button!",
-//   icon: "success",
-// });
-
-let player2Score = 10;
-
-swal({
-          title: "Ah, no good!!",
-          text: "Nope! You Scored: " + player2Score,
-          type: "success",
-          confirmButtonText: "Play Again"
-        });
 
 const canvas = document.querySelector('canvas'); //DOM selector
 //jQuery selector needed instead
-var c = canvas.getContext('2d');
+const c = canvas.getContext('2d');
 
 
-class Vehicle {
-  constructor(name, speed, direction, xPosition, yPosition, width, height) {
+//GLOBAL VARIABLES
+let player2Score = 0;
+let player1Score = 0
+
+//MODAL
+// swal({
+//           title: "Ah, no good!!",
+//           text: "Nope! You Scored: " + player2Score,
+//           type: "success",
+//           confirmButtonText: "Play Again"
+//         });
+
+
+//CLASSES
+
+class Sprite {
+  constructor(name, speed, speedType, direction, xPosition, yPosition, width, height) {
     this.name = name;
     this.speed = speed;
+    this.speedType = speedType;
     this.direction = direction;
     this.xPosition = xPosition;
     this.yPosition = yPosition;
     this.width = width;
     this.height = height;
   }
+
 }
 
-const sprite = new Vehicle('sprite', .5, 'right', 100, 40, 40, 40)
+const sprite = new Sprite('sprite', 4, 'medium', 'all', 650, 300, 128, 128);
+
+
+class Vehicle extends Sprite {
+}
+
+//FAST =  4 Vehicles
+const car = new Vehicle('car', 5, 'fast', 'left', 1300, 0, 126, 126);
+const formula1 = new Vehicle('formula1', 5, 'fast', 'left', 1700, 0, 126, 126);
+console.log(Vehicle);
+const truck = new Vehicle('truck', 5, 'fast', 'left', 2100, 0, 126, 126);
+const trucktruck = new Vehicle('trucktruck', 5, 'fast', 'left', 2500, 0, 126, 126);
+
+//SLOW = 5 Vehicles
+const scooter = new Vehicle('scooter', 3, 'slow', 'right', -440, 135, 126, 126);
+const segway = new Vehicle('segway', 3, 'slow', 'right', -840, 135, 126, 126);
+const trolleyCart = new Vehicle('trolleyCart', 3, 'right', 'right', -1240, 135, 126, 126);
+const tumbleweed = new Vehicle('tumbleweed', 3, 'slow', 'right', -1640, 135, 126, 126);
+
+//MEDIUM = 5 Vehicles
+const rv = new Vehicle('rv', 3, 'medium', 'left', 700, 270, 126, 126);
+const excavator = new Vehicle('excavator', 3, 'medium', 'left', 500, 270, 126, 126);
+const crane = new Vehicle('crane', 3, 'medium', 'left', 1500, 270, 126, 126);
+const camper = new Vehicle('camper', 3, 'medium', 'left', 1900, 270, 126, 126);
+const bulldozer = new Vehicle('bulldozer', 3, 'medium', 'right', 2300, 270, 126, 126);
+
+
 
 const reset = () => {
-  sprite.xPosition = 100;
-  sprite.yPosition = 40;
+  sprite.xPosition = 600;
+  sprite.yPosition = 350;
 }
-
-//WANT 10 vehicles
-
-//VEHICLES
-const car = new Vehicle('car', 1.5, 'right', 0, 20, 128, 128);
-const truck = new Vehicle('truck', .5, 'right', 0, 80, 50, 50);
-const bulldozer = new Vehicle('bulldozer', .5, 'right', 0, 100, 64, 64);
-const van = new Vehicle('van', 1, 'left', 100, 40, 60, 60);
-const tumbleweed = new Vehicle('tumbleweed', 1, 'left', 400, 60, 50, 50);
-console.log(Vehicle);
-
 
 
 // ------------------------ IMAGE VARIABLES ------------------------------
@@ -57,75 +75,147 @@ console.log(Vehicle);
 
 //SPRITE IMAGE VARIABLE
 let spriteImage = new Image();
-spriteImage.src = 'https://cdn.iconscout.com/public/images/icon/premium/png-256/food-truck-car-transport-machine-movement-transportation-3486058b4a238844-256x256.png';
+spriteImage.src = 'images/tacotruck.png'
+// spriteImage.src = 'https://cdn.iconscout.com/public/images/icon/premium/png-256/food-truck-car-transport-machine-movement-transportation-3486058b4a238844-256x256.png';
 
 // TUMBLEWEED IMAGE VARIABLE
-let tumbleweedImage = new Image();
-tumbleweedImage.src = 'https://i.imgur.com/jTqxjp1.png';
-//CAR IMAGE VARIABLE
-let carImage = new Image();
-carImage.src = 'http://icons-for-free.com/free-icons/png/128/67528.png';
-//TRUCK IMAGE VARIABLE
-let truckImage = new Image();
-truckImage.src = 'https://i.imgur.com/ML2VTl4.png';
-//BULLDOZER IMAGE VARIABLE
+
+
 let bulldozerImage = new Image();
-bulldozerImage.src = 'https://i.imgur.com/NiY5TTh.png'
-//VAN IMAGE VARIABLE
-let vanImage = new Image();
-vanImage.src = 'https://image.flaticon.com/icons/png/128/171/171255.png'
+bulldozerImage.src = 'images/bulldozer.png'
+
+let camperImage = new Image();
+camperImage.src = 'images/camper.png'
+
+let carImage = new Image();
+carImage.src = 'images/car.png'
+
+let craneImage = new Image();
+craneImage.src = 'images/crane.png'
+
+let truckImage = new Image();
+truck.src = 'images/truck.png'
+
+let excavatorImage = new Image();
+excavator.src = 'images/excavator.png'
+
+let formula1Image = new Image();
+formula1Image.src = 'images/formula1.png'
+
+let rvImage = new Image();
+rvImage.src = 'images/rv.png'
+
+let scooterImage = new Image();
+scooterImage.src = 'images/scooter.png'
+
+let segwayImage = new Image();
+segwayImage.src = 'images/segway.png'
 
 
+
+let trolleyCartImage = new Image();
+trolleyCartImage.src = 'images/trolleyCart.png'
+
+
+let trucktruckImage = new Image();
+trucktruckImage.src = 'images/trucktruck.png'
+
+
+let tumbleweedImage = new Image();
+tumbleweedImage.src = 'images/tumbleweed.png';
+
+
+let tacotruckImage = new Image();
+tacotruckImage.src = 'images/tacotruck.png'
 
 //----------------------------  DRAW THE VEHICLES  -----------------------------
+// what image, x-starting pt., y-starting pt., width, height
 
 const animate = () => {
-  c.clearRect(0, 0, 1095, 468);
-  // c.beginPath(); //don't think you need.
+  c.clearRect(0, 0, 1600, 468);
   requestAnimationFrame(animate);
 
-  // what image, x-starting pt., y-starting pt., width, height
-  c.drawImage(tumbleweedImage, tumbleweed.xPosition, tumbleweed.yPosition, tumbleweed.width, tumbleweed.height);
-  c.drawImage(carImage, car.xPosition, car.yPosition, car.width, car.height); //x, y, how wide, how tall
-  c.drawImage(truckImage, truck.xPosition, truck.yPosition, truck.width, truck.height); //x, y, how wide, how tall
+  //FAST
+    c.drawImage(carImage, car.xPosition, car.yPosition, car.width, car.height);
+    c.drawImage(formula1Image, formula1.xPosition, formula1.yPosition, formula1.width, formula1.height);
+    c.drawImage(truckImage, truck.xPosition, truck.yPosition, truck.width, truck.height);
+    c.drawImage(trucktruckImage, trucktruck.xPosition, trucktruck.yPosition, trucktruck.width, trucktruck.height);
+
+// console.log(excavator);
+//SLOW
+c.drawImage(tumbleweedImage, tumbleweed.xPosition, tumbleweed.yPosition, tumbleweed.width, tumbleweed.height);
+c.drawImage(scooterImage, scooter.xPosition, scooter.yPosition, scooter.width, scooter.height);
+c.drawImage(segwayImage, segway.xPosition, segway.yPosition, segway.width, segway.height);
+c.drawImage(trolleyCartImage, trolleyCart.xPosition, trolleyCart.yPosition, trolleyCart.width, trolleyCart.height);
+
+//MEDIUM
   c.drawImage(bulldozerImage, bulldozer.xPosition, bulldozer.yPosition, bulldozer.width, bulldozer.height);
-  c.drawImage(vanImage, van.xPosition, van.yPosition, van.width, van.height)
+  c.drawImage(camperImage, camper.xPosition, camper.yPosition, camper.width, camper.height);
+  c.drawImage(craneImage, crane.xPosition, crane.yPosition, crane.width, crane.height);
+  c.drawImage(excavatorImage, excavator.xPosition, excavator.yPosition, excavator.width, excavator.height);
+  c.drawImage(rvImage, rv.xPosition, rv.yPosition, rv.width, rv.height);
+
+
+//SPRITE
   c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
 
   //------------------------  MAKE THE VEHICLES MOVE  --------------------------
-  //Remember: -= or += determine the direction.
 
-  tumbleweed.xPosition -= tumbleweed.speed;
-  car.xPosition += car.speed;
-  truck.xPosition += truck.speed;
-  bulldozer.xPosition += bulldozer.speed;
-  van.xPosition -= van.speed;
-  console.log('hi');
+  //FAST, TOP LANE
+  car.xPosition -= car.speed;
+  formula1.xPosition -= formula1.speed;
+  trucktruck.xPosition -= trucktruck.speed;
+  truck.xPosition -= truck.speed;
+
+
+  //SLOW, MIDDLE LANE
+  tumbleweed.xPosition += tumbleweed.speed;
+  segway.xPosition += segway.speed;
+  scooter.xPosition += scooter.speed;
+  trolleyCart.xPosition += trolleyCart.speed;
+
+  //MEDIUM, BOTTOM LANE
+  bulldozer.xPosition -= bulldozer.speed;
+  camper.xPosition -= camper.speed;
+  crane.xPosition -= crane.speed;
+  excavator.xPosition -= excavator.speed;
+  rv.xPosition -= rv.speed;
 }
 
 //-----------------------------  MAKE SPRITE MOVE  -----------------------------
 
 function moveSprite(e) {
-  console.log('hi');
   if (e.keyCode == 39) { //r
-    sprite.xPosition += 5;
+    sprite.xPosition += 50;
+    console.log(sprite);
   }
   if (e.keyCode == 37) { //l
-    sprite.xPosition -= 5;
+    sprite.xPosition -= 10;
+      console.log(sprite);
   }
   if (e.keyCode == 38) { //up
-    sprite.yPosition -= 5;
+    sprite.yPosition -= 10;
+    console.log(sprite);
   }
   if (e.keyCode == 40) { //down
-    sprite.yPosition += 5;
-    console.log(e.keycode);
+    sprite.yPosition += 10;
+    console.log(sprite);
     canvas.width = canvas.width; //resets the canvas.
+    console.log(sprite);
+  }
+  // if (sprite.xPosition >= )
+
+
+  if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
+    reset();
   }
   if (sprite.yPosition <= -35) {
      // alert('hi'); for testing. COULD TURN THEM AROUND INSTEAD.
-    player2Score++; // Score increases;
+    player2Score++;
+    player1Score++; // Score increases;
     reset();
+    $("#player1Score").text('Player 1\'s score is: ' + player1Score);
     $("#player2Score").text('Player 2\'s score is: ' + player2Score);
     console.log(player2Score);
   }
@@ -149,7 +239,19 @@ console.log(player2Score);
 
 //-----------------------  COLLISION DETECTION FUNCTION  -----------------------
 
-// const detectCollision = () => {
+// const detectCollision = (a, b) => {
+
+
+
+
+//example code here:
+// collides: function(a, b) { // Algorithm for checking if two squared objects collide
+// 	  	return a.x < b.x + b.width && // Returns true if all those conditions are met
+// 	           a.x + a.width > b.x &&
+// 	           a.y < b.y + b.height &&
+// 	           a.y + a.height > b.y;
+// 	},
+
 
 
 //https://codereview.stackexchange.com/questions/160801/frogger-html5-javascript-canvas-game-using-object-oriented-design
