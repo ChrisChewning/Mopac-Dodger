@@ -6,7 +6,9 @@ wireframe is here: https://wireframe.cc/DKUapP
 // All icons are licensed under Creative Commons and taken from FlatIcon (https://www.flaticon.com)
 
 
-// Excavator =
+
+
+
 
 
 // Race Car = https://www.flaticon.com/authors/nikita-golubev
