@@ -6,13 +6,7 @@ const canvas = document.querySelector('canvas'); //DOM selector
 const c = canvas.getContext('2d');
 
 
-//GLOBAL VARIABLES
-let player2Score = 0;
-let player1Score = 0;
-
 // MODAL
-
-
 
 swal({title: "Make it to the other side without getting hit!",
   buttons: {
@@ -31,6 +25,10 @@ swal({title: "Make it to the other side without getting hit!",
 //success modal
 //failure modal
 
+
+//GLOBAL VARIABLES
+let player2Score = '';
+let player1Score = '';
 
 
 
@@ -53,27 +51,28 @@ const sprite = new Sprite('sprite', 4, 'medium', 'all', 660, 510, 128, 128);
 
 class Vehicle extends Sprite {}
 
-//VEHICLE VARIABLES
-
+const vehicles = [
 //FAST =  4 Vehicles
-const car = new Vehicle('car', 5, 'fast', 'left', 1300, 120, 126, 126);
-const formula1 = new Vehicle('formula1', 5, 'fast', 'left', 1700, 120, 126, 126);
-console.log(Vehicle);
-const truck = new Vehicle('truck', 5, 'fast', 'left', 2100, 120, 126, 126);
-const trucktruck = new Vehicle('trucktruck', 5, 'fast', 'left', 2500, 120, 126, 126);
+car = new Vehicle('car', 5, 'fast', 'left', 1300, 120, 126, 126),
+formula1 = new Vehicle('formula1', 5, 'fast', 'left', 1700, 120, 126, 126),
+// console.log(Vehicle);
+truck = new Vehicle('truck', 5, 'fast', 'left', 2100, 120, 126, 126),
+trucktruck = new Vehicle('trucktruck', 5, 'fast', 'left', 2500, 120, 126, 126),
 
 //SLOW = 5 Vehicles
-const scooter = new Vehicle('scooter', 3, 'slow', 'right', -440, 245, 126, 126);
-const segway = new Vehicle('segway', 3, 'slow', 'right', -840, 245, 126, 126);
-const trolleyCart = new Vehicle('trolleyCart', 3, 'right', 'right', -1240, 245, 126, 126);
-const tumbleweed = new Vehicle('tumbleweed', 3, 'slow', 'right', -1640, 245, 126, 126);
+scooter = new Vehicle('scooter', 3, 'slow', 'right', -440, 245, 126, 126),
+segway = new Vehicle('segway', 3, 'slow', 'right', -840, 245, 126, 126),
+trolleyCart = new Vehicle('trolleyCart', 3, 'right', 'right', -1240, 245, 126, 126),
+tumbleweed = new Vehicle('tumbleweed', 3, 'slow', 'right', -1640, 245, 126, 126),
 
 //MEDIUM = 5 Vehicles
-const bulldozer = new Vehicle('bulldozer', 3, 'medium', 'right', 2300, 380, 126, 126);
-const camper = new Vehicle('camper', 3, 'medium', 'left', 1900, 380, 126, 126);
-const crane = new Vehicle('crane', 3, 'medium', 'left', 1500, 380, 126, 126);
-const excavator = new Vehicle('excavator', 3, 'medium', 'left', 500, 380, 126, 126);
-const rv = new Vehicle('rv', 3, 'medium', 'left', 700, 380, 126, 126);
+bulldozer = new Vehicle('bulldozer', 3, 'medium', 'right', 2300, 380, 126, 126),
+camper = new Vehicle('camper', 3, 'medium', 'left', 1900, 380, 126, 126),
+crane = new Vehicle('crane', 3, 'medium', 'left', 1500, 380, 126, 126),
+excavator = new Vehicle('excavator', 3, 'medium', 'left', 500, 380, 126, 126),
+rv = new Vehicle('rv', 3, 'medium', 'left', 700, 380, 126, 126),
+]
+
 
 
 
@@ -210,8 +209,8 @@ function moveSprite(e) {
     player1Score++;
     reset();
 
-    $("#player2Score").text('Player 2\'s score is: ' + player2Score);
-    $("#player1Score").text('Player 1\'s score is: ' + player1Score);
+    $("#player2Score").text('Player Two: ' + player2Score);
+    $("#player1Score").text('Player One: ' + player1Score);
     console.log(player1Score);
     console.log(player2Score);
   }
@@ -222,7 +221,7 @@ document.onkeydown = moveSprite; //do not put () here.
 
 //-----------------------  COLLISION DETECTION FUNCTION  -----------------------
 
-// const detectCollision = (a, b) => {
+// const detectCollision = (sprite, vehicles) => {
 
 
 // example code here:
