@@ -8,7 +8,8 @@ const c = canvas.getContext('2d');
 
 // MODAL
 
-swal({title: "Make it to the other side without getting hit!",
+swal({
+  title: "Make it to the other side without getting hit!",
   buttons: {
     onePlayer: {
       text: "One Player!",
@@ -17,8 +18,8 @@ swal({title: "Make it to the other side without getting hit!",
     twoPlayers: {
       text: "Two Players!",
       value: "two",
+    }
   }
-}
 });
 
 
@@ -52,25 +53,25 @@ const sprite = new Sprite('sprite', 4, 'medium', 'all', 660, 510, 128, 128);
 class Vehicle extends Sprite {}
 
 const vehicles = [
-//FAST =  4 Vehicles
-car = new Vehicle('car', 5, 'fast', 'left', 1300, 120, 126, 126),
-formula1 = new Vehicle('formula1', 5, 'fast', 'left', 1700, 120, 126, 126),
-// console.log(Vehicle);
-truck = new Vehicle('truck', 5, 'fast', 'left', 2100, 120, 126, 126),
-trucktruck = new Vehicle('trucktruck', 5, 'fast', 'left', 2500, 120, 126, 126),
+  //FAST =  4 Vehicles
+  car = new Vehicle('car', 5, 'fast', 'left', 1300, 120, 126, 126),
+  formula1 = new Vehicle('formula1', 5, 'fast', 'left', 1700, 120, 126, 126),
+  // console.log(Vehicle);
+  truck = new Vehicle('truck', 5, 'fast', 'left', 2100, 120, 126, 126),
+  trucktruck = new Vehicle('trucktruck', 5, 'fast', 'left', 2500, 120, 126, 126),
 
-//SLOW = 5 Vehicles
-scooter = new Vehicle('scooter', 3, 'slow', 'right', -440, 245, 126, 126),
-segway = new Vehicle('segway', 3, 'slow', 'right', -840, 245, 126, 126),
-trolleyCart = new Vehicle('trolleyCart', 3, 'right', 'right', -1240, 245, 126, 126),
-tumbleweed = new Vehicle('tumbleweed', 3, 'slow', 'right', -1640, 245, 126, 126),
+  //SLOW = 5 Vehicles
+  scooter = new Vehicle('scooter', 3, 'slow', 'right', -440, 245, 126, 126),
+  segway = new Vehicle('segway', 3, 'slow', 'right', -840, 245, 126, 126),
+  trolleyCart = new Vehicle('trolleyCart', 3, 'right', 'right', -1240, 245, 126, 126),
+  tumbleweed = new Vehicle('tumbleweed', 3, 'slow', 'right', -1640, 245, 126, 126),
 
-//MEDIUM = 5 Vehicles
-bulldozer = new Vehicle('bulldozer', 3, 'medium', 'right', 2300, 380, 126, 126),
-camper = new Vehicle('camper', 3, 'medium', 'left', 1900, 380, 126, 126),
-crane = new Vehicle('crane', 3, 'medium', 'left', 1500, 380, 126, 126),
-excavator = new Vehicle('excavator', 3, 'medium', 'left', 500, 380, 126, 126),
-rv = new Vehicle('rv', 3, 'medium', 'left', 700, 380, 126, 126),
+  //MEDIUM = 5 Vehicles
+  bulldozer = new Vehicle('bulldozer', 3, 'medium', 'right', 2300, 380, 126, 126),
+  camper = new Vehicle('camper', 3, 'medium', 'left', 1900, 380, 126, 126),
+  crane = new Vehicle('crane', 3, 'medium', 'left', 1500, 380, 126, 126),
+  excavator = new Vehicle('excavator', 3, 'medium', 'left', 500, 380, 126, 126),
+  rv = new Vehicle('rv', 3, 'medium', 'left', 700, 380, 126, 126),
 ]
 
 
@@ -233,35 +234,3 @@ document.onkeydown = moveSprite; //do not put () here.
 // 	},
 //
 //   // (sprite, vehicles)
-
-
-
-//https://codereview.stackexchange.com/questions/160801/frogger-html5-javascript-canvas-game-using-object-oriented-design
-//     if (v.find(v =>
-//         (v.y >= this.y - 10) &&
-//         (v.y <= this.y) &&
-//         (v.x >= this.x - (v.length))
-//         && (v.x <= this.x - 14))
-//     ) {
-//         loseLife();
-//         resetPosition();
-//     }
-// }
-
-
-//this wouldn't work b.c this is whether a value is greater than another one.
-// if (vehicle.xPosition >= sprite.xPosition || vehicle.yPosition >= sprite.yPosition)
-
-
-
-
-
-//OPTION 1: put boundaries on each image. https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-
-//OPTION 2: put the 'enemies' into an array. Loop through the array, checking if they've hit the sprite.
-
-// const collision = (enemies, sprite) => {
-//
-// }
-
-//OPTION 3: get bounding client rec().left .right .top .bottom

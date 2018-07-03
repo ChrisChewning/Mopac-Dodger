@@ -2,6 +2,41 @@
 
 Collision Detection
 
+
+//https://codereview.stackexchange.com/questions/160801/frogger-html5-javascript-canvas-game-using-object-oriented-design
+//     if (v.find(v =>
+//         (v.y >= this.y - 10) &&
+//         (v.y <= this.y) &&
+//         (v.x >= this.x - (v.length))
+//         && (v.x <= this.x - 14))
+//     ) {
+//         loseLife();
+//         resetPosition();
+//     }
+// }
+
+
+
+//this wouldn't work b.c this is whether a value is greater than another one.
+// if (vehicle.xPosition >= sprite.xPosition || vehicle.yPosition >= sprite.yPosition)
+
+
+
+
+//OPTION 1: put boundaries on each image. https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+//OPTION 2: put the 'enemies' into an array. Loop through the array, checking if they've hit the sprite.
+
+// const collision = (enemies, sprite) => {
+//
+// }
+
+//OPTION 3: get bounding client rec().left .right .top .bottom
+
+
+
+
+
 FROM SPACE INVADERS GAME
 https://github.com/scrummish/Space-Invaders-2018/blob/master/js/app.js
 
@@ -57,4 +92,68 @@ https://stackoverflow.com/questions/28498014/canvas-drawimage-poor-quality
   // //     c.strokeStyle = 'green';
   // //   }
   // //   console.log(randomize); //randomize function is working.
-  // //
+
+
+
+To create my own modal later:
+
+
+
+Html starter code:
+<!-- Modal Section  -->
+  <!-- <div class="bg-modal">
+    <div class="modal">
+    <img src= '' alt=''> </img>
+    <form action = ''>
+      <input type= 'text' placeholder = 'name'>
+      <input type= 'text' placeholder = 'email'>
+      <a href='#'' class='btn'>Submit</a> -->
+    <!-- </form> -->
+
+
+css
+/* .bg-modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  border-radius: 4px;
+  text-align: center;
+  padding: 20px;
+}
+
+input {
+  width: 50%;
+  display: block;
+  margin: 15px auto;
+} */
+
+
+Container div code:
+
+/* #container {
+  position: relative;
+  vertical-align: middle;
+  margin-top: 10%;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+  /* background-color: blue; */
+
+  /* background-color: #FAF3DD; */
+  /* border: solid black 1px; */
+  /* background-color: #66ffff; */
+  /* border: solid black 1px; */
