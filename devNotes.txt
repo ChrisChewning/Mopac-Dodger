@@ -1,16 +1,47 @@
 
 
-1. how to make a collision detection? Here are 3 ideas: 
+Collision Detection
+
+FROM SPACE INVADERS GAME
+https://github.com/scrummish/Space-Invaders-2018/blob/master/js/app.js
 
 
 
-1. Should I use an onload function?
-  example here: https://codepen.io/JABedford/pen/GdgOPN
-Resources.load([carImage, truckImage, bulldozerImage, vanImage]);
- Resources.onReady(init); ???
+
+//FROM FOOTBALL GAME
+https://github.com/anthonyjlower/canvas-football-game/blob/master/js/app.js
+//Look for collisions between the user and the computer characters
+collisionDetection: function() {
+  let playerX = game.activeChar.body.x;
+  let playerY = game.activeChar.body.y;
+
+  for(let i = 0; i < factory.roster.length; i++){
+    let oppX = factory.roster[i].body.x;
+    let oppY = factory.roster[i].body.y;
+
+    let xDiff = Math.abs(playerX - oppX);
+    let yDiff = Math.abs(playerY - oppY);
+
+    if (xDiff <= game.activeChar.size / 2 && yDiff <= game.activeChar.size / 2) {
+      this.stopOpp();
+      this.updateLives();
+    }
+  }
+},
 
 
-2. Tried randomizing the color of images but doubt it can work.
+
+
+Background Image Issue for Canvas
+https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
+https://stackoverflow.com/questions/19703450/poor-quality-of-png-images-drawn-into-html-canvas
+https://stackoverflow.com/questions/28498014/canvas-drawimage-poor-quality
+
+
+
+
+
+2 Tried randomizing the color of images but doubt it can work.
 
   // // for (var i = 0; i < 10; i++) {  //10 VEHICLES TOTAL.
 

@@ -8,15 +8,28 @@ const c = canvas.getContext('2d');
 
 //GLOBAL VARIABLES
 let player2Score = 0;
-let player1Score = 0
+let player1Score = 0;
 
 // MODAL
-// swal({
-//           title: "Ah, no good!!",
-//           text: "Nope! You Scored: " + player2Score,
-//           type: "success",
-//           confirmButtonText: "Play Again"
-//         });
+
+
+
+swal({title: "Make it to the other side without getting hit!",
+  buttons: {
+    onePlayer: {
+      text: "One Player!",
+      value: "one",
+    },
+    twoPlayers: {
+      text: "Two Players!",
+      value: "two",
+  }
+}
+});
+
+
+//success modal
+//failure modal
 
 
 
@@ -72,14 +85,9 @@ const reset = () => {
 
 // ------------------------ IMAGE VARIABLES ------------------------------
 
-//Could put in different js file, then load into here.
-
 //SPRITE IMAGE VARIABLE
 let spriteImage = new Image();
 spriteImage.src = 'images/tacotruck.png'
-// spriteImage.src = 'https://cdn.iconscout.com/public/images/icon/premium/png-256/food-truck-car-transport-machine-movement-transportation-3486058b4a238844-256x256.png';
-
-// TUMBLEWEED IMAGE VARIABLE
 
 //IMAGES FOR FAST SPEED ICONS
 let carImage = new Image();
@@ -90,7 +98,6 @@ let truckImage = new Image();
 truck.src = 'images/truck.png'
 let trucktruckImage = new Image();
 trucktruckImage.src = 'images/trucktruck.png'
-
 
 //IMAGES FOR MEDIUM SPEED ICONS
 let bulldozerImage = new Image();
@@ -104,7 +111,6 @@ excavator.src = 'images/excavator.png'
 let rvImage = new Image();
 rvImage.src = 'images/rv.png'
 
-
 //IMAGES FOR SLOW SPEED ICONS
 let scooterImage = new Image();
 scooterImage.src = 'images/scooter.png'
@@ -114,7 +120,6 @@ let trolleyCartImage = new Image();
 trolleyCartImage.src = 'images/trolleyCart.png'
 let tumbleweedImage = new Image();
 tumbleweedImage.src = 'images/tumbleweed.png';
-
 
 let backgroundImage = new Image();
 backgroundImage.src = 'https://opengameart.org/sites/default/files/Toon%20Road%20Texture.png';
@@ -126,9 +131,8 @@ const animate = () => {
   c.clearRect(0, 0, 1600, 650);
   requestAnimationFrame(animate);
 
-  // BACKROUND
+  // BACKGROUND
   c.drawImage(backgroundImage, 0, 110, 1600, 400);
-
 
   //FAST
   c.drawImage(carImage, car.xPosition, car.yPosition, car.width, car.height);
@@ -202,25 +206,18 @@ function moveSprite(e) {
     reset();
   }
   if (sprite.yPosition <= -10) {
-    // alert('hi'); for testing. COULD TURN THEM AROUND INSTEAD.
     player2Score++;
-    player1Score++; // Score increases;
+    player1Score++;
     reset();
-    $("#player1Score").text('Player 1\'s score is: ' + player1Score);
+
     $("#player2Score").text('Player 2\'s score is: ' + player2Score);
+    $("#player1Score").text('Player 1\'s score is: ' + player1Score);
     console.log(player1Score);
     console.log(player2Score);
   }
 }
 animate();
 document.onkeydown = moveSprite; //do not put () here.
-
-
-
-// const $player2Score = $('player2Score')
-// $('#player2Score').text('Player 2\'s score is: ' + player2Score);
-
-
 
 
 //-----------------------  COLLISION DETECTION FUNCTION  -----------------------
