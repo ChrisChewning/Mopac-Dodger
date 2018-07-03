@@ -1,5 +1,27 @@
 
 
+MODAL:
+
+//MODAL WITH DIRECTIONS AND PLAYER 1 OR 2
+swal({
+  title: "Make it to the other side without getting hit!",
+  buttons: {
+    onePlayer: {
+      text: "One Player!",
+      value: "one",
+      customClass: '.btn-1',
+    },
+    twoPlayers: {
+      text: "Two Players!",
+      value: "two",
+      className: '.btn-2',
+    }
+  }
+  //didn't work to add an image...  icon: images/sign.png;
+}); //end of swal
+
+
+
 CSS flexbox: https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically
 
 
