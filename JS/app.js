@@ -23,9 +23,6 @@ swal({
 });
 
 
-//success modal
-//failure modal
-
 
 //GLOBAL VARIABLES
 let player2Score = '';
@@ -220,17 +217,40 @@ animate();
 document.onkeydown = moveSprite; //do not put () here.
 
 
+
+
+
+
+
+//MODALS FOR TIE, PLAYER 1 WIN, OR PLAYER 2 WIN.
+
+// if (player1Score == player2Score) {
+// swal('No one wins', "What is this, soccer? PLAY AGAIN!!", "images/red-card.png");
+//
+// } if (player1Score > player2Score) {
+// swal('Player 1 wins', "You survived MoPac and its many enemies!", "images/moustache.png");
+//
+// } else {
+// swal('Player 2 wins', "You survived MoPac and its many enemies!", "images/yogaMat.png");
+// }
+
+
+
+
+
+
+
+
+
+
 //-----------------------  COLLISION DETECTION FUNCTION  -----------------------
 
-// const detectCollision = (sprite, vehicles) => {
+const detectCollision = (sprite, vehicles) => {
+// Algorithm for checking if two squared objects collide
+	  	return a.x < b.x + b.width && // Returns true if all those conditions are met
+	           a.x + a.width > b.x &&
+	           a.y < b.y + b.height &&
+	           a.y + a.height > b.y;
+	},
 
-
-// example code here:
-// collides: function(a, b) { // Algorithm for checking if two squared objects collide
-// 	  	return a.x < b.x + b.width && // Returns true if all those conditions are met
-// 	           a.x + a.width > b.x &&
-// 	           a.y < b.y + b.height &&
-// 	           a.y + a.height > b.y;
-// 	},
-//
-//   // (sprite, vehicles)
+  // (sprite, vehicles)
