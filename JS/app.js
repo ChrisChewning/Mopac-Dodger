@@ -1,26 +1,96 @@
 // window.onLoad = function() {
 
 
+//-----------------------  COLLISION DETECTION FUNCTION  -----------------------
+
+
+// const  = (sprite[i], vehicles[i]) => {
+// // Algorithm for checking if two squared objects collide
+//           return a.x < b.x + b.width && // Returns true if all those conditions are met
+//                a.x + a.width > b.x &&
+//                a.y < b.y + b.height &&
+//                a.y + a.height > b.y;
+//     },
+//
+//
+// a = sprite   b = vehicles
+
+
+
+
+
+// let detectCollision = (sprite, vehicles.name) => {
+// // Algorithm for checking if two squared objects collide
+// 	  	return sprite.xPosition < vehicles.xPosition + vehicles.width &&
+//       // Returns true if all those conditions are met
+// 	           sprite.xPosition + sprite.width > vehicles.xPosition &&
+// 	           sprite.yPosition < vehicles.yPosition + vehicles.height &&
+// 	           sprite.yPosition + sprite.height > vehicles.yPosition;
+// 	}
+//   detectCollision();
+
+
+
 const canvas = document.querySelector('canvas'); //DOM selector
 //jQuery selector needed instead
 const c = canvas.getContext('2d');
 
 
-// MODAL
 
+//MODAL WITH DIRECTIONS AND PLAYER 1 OR 2 
 swal({
   title: "Make it to the other side without getting hit!",
   buttons: {
     onePlayer: {
       text: "One Player!",
       value: "one",
+      customClass: '.btn-1',
     },
     twoPlayers: {
       text: "Two Players!",
       value: "two",
+      className: '.btn-2',
     }
   }
-});
+  //didn't work to add an image...  icon: images/sign.png;
+}); //end of swal
+
+
+
+//-----------------------------HOW TO ACCESS MODAL------------------------------
+
+// document.getElementById('popup').onsubmit = () => {
+
+// $('#popup').on('click', (e) => {
+// console.log("the button clicked"); //test to see if it's working
+//
+// //display sprite1 (moustache)
+// //tie score to player1
+// //start timer
+// // });
+// })
+
+
+
+
+//TIMER IS WORKING
+let time = 60;
+const setTimer = () => {
+  const timer = setInterval(() => {
+    time--;
+console.log(time); //check it here, not after closing brackets.
+// if (time % 5 == 0) {
+  // animate();
+
+
+  }, 1000); //this goes every second.
+}
+setTimer();
+
+
+
+
+
 
 
 
@@ -124,6 +194,8 @@ backgroundImage.src = 'https://opengameart.org/sites/default/files/Toon%20Road%2
 //----------------------------  DRAW THE VEHICLES  -----------------------------
 // what image, x-starting pt., y-starting pt., width, height
 
+
+
 const animate = () => {
   c.clearRect(0, 0, 1600, 650);
   requestAnimationFrame(animate);
@@ -177,6 +249,10 @@ const animate = () => {
   rv.xPosition -= rv.speed;
 }
 
+
+
+
+
 //-----------------------------  MAKE SPRITE MOVE  -----------------------------
 
 function moveSprite(e) {
@@ -217,7 +293,9 @@ animate();
 document.onkeydown = moveSprite; //do not put () here.
 
 
-
+const b = new Bump(sprite);
+b.hitTestRectangle(sprite, tumbleweed);
+b.hit(sprite, tumbleweed, true);
 
 
 
@@ -226,31 +304,10 @@ document.onkeydown = moveSprite; //do not put () here.
 
 // if (player1Score == player2Score) {
 // swal('No one wins', "What is this, soccer? PLAY AGAIN!!", "images/red-card.png");
-//
+// }
 // } if (player1Score > player2Score) {
 // swal('Player 1 wins', "You survived MoPac and its many enemies!", "images/moustache.png");
 //
 // } else {
 // swal('Player 2 wins', "You survived MoPac and its many enemies!", "images/yogaMat.png");
 // }
-
-
-
-
-
-
-
-
-
-
-//-----------------------  COLLISION DETECTION FUNCTION  -----------------------
-
-const detectCollision = (sprite, vehicles) => {
-// Algorithm for checking if two squared objects collide
-	  	return a.x < b.x + b.width && // Returns true if all those conditions are met
-	           a.x + a.width > b.x &&
-	           a.y < b.y + b.height &&
-	           a.y + a.height > b.y;
-	},
-
-  // (sprite, vehicles)

@@ -1,7 +1,9 @@
 
 
-Collision Detection
+CSS flexbox: https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically
 
+
+Collision Detection
 
 //https://codereview.stackexchange.com/questions/160801/frogger-html5-javascript-canvas-game-using-object-oriented-design
 //     if (v.find(v =>
