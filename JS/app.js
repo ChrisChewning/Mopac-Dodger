@@ -9,6 +9,51 @@ const canvas = document.querySelector('canvas'); //DOM selector
 const c = canvas.getContext('2d');
 
 
+
+
+//-----------------------  ONE OR TWO PLAYERS  -----------------------
+
+$('#onePlayerBtn').on('click', (e) => {
+  // e.preventDefault();
+console.log('test1');
+setTimer();
+$('#onePlayerBtn').hide();
+$('#twoPlayerBtn').hide();
+});
+
+
+$('#twoPlayerBtn').on('click', (e) => {
+  // e.preventDefault();
+console.log('test2')
+setTimer();
+$('#onePlayerBtn').hide();
+$('#twoPlayerBtn').hide();
+});
+
+
+
+
+//Button click on 1 Player mode in the start Game Modal
+onePlayerBtn.onclick = function() {
+	game.player1IsAlive = true;
+	startModel.style.display = "none";
+	// game.chooseCharacter1();
+	startGame();
+}
+
+//Button click on the 2 player mode in the start game modal
+twoPlayerBtn.onclick = function() {
+	game.player1IsAlive = true;
+	game.player2IsAlive = true;
+	startModel.style.display = "none";
+	// game.chooseCharacter1();
+	startGame();
+}
+
+
+
+
+
 //TIMER IS WORKING
 let time = 60;
 const setTimer = () => {
@@ -116,6 +161,11 @@ const vehicles = [
 
 
 
+
+
+
+
+
 //RESET THE SPRITE WHEN IT GETS HIT OR GETS A POINT OR REACHES THE SIDES OF THE SCREEN.
 const reset = () => {
   sprite.xPosition = 660;
@@ -214,6 +264,22 @@ function moveSprite(e) {
 }
 animate();
 document.onkeydown = moveSprite; //do not put () here.
+
+
+
+
+//STARTS THE GAME
+
+// on click
+
+// const start = () => {
+  //show player 1 only.
+  //start timer
+  //sprite start x position and y position
+// }
+
+
+
 
 
 
