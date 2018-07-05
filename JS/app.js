@@ -41,7 +41,7 @@ $('#twoPlayerBtn').on('click', (e) => {
   $('#player2Score').text('Player 2 Score: ');
   $('#modal').hide();
   $('#progressBar').show();
-  setTimer(); //starts the timer
+  setTimer();
 });
 
 
@@ -62,9 +62,9 @@ const setTimer = () => {
     console.log(time); //check it here, not after closing brackets.
     progressBarTimer(); //sets the progress bar to start counting down on the screen.
 
-//     if(progressBarTimer == 0) {
-//         clearInterval(timer);
-// }
+    //     if(progressBarTimer == 0) {
+    //         clearInterval(timer);
+    // }
 
 
     //FOR ONE PLAYER GAME. Player 2 is not alive. WORKS. alerts hi and yo
@@ -105,7 +105,8 @@ class Sprite {
     this.speed = speed;
     this.speedType = speedType;
     this.direction = direction;
-    this.xPosition = xPosition;
+    this.startingpXPosition = xPosition; //this allows it to be redrawn
+    this.xPosition = xPosition; //this changes when you move the car with speed.
     this.yPosition = yPosition;
     this.width = width;
     this.height = height;
@@ -118,30 +119,79 @@ class Sprite {
 const sprite = new Sprite(spriteImage, 4, 'medium', 'all', 660, 510, 128, 128);
 
 //VEHICLE
-class Vehicle extends Sprite {}
+class Vehicle extends Sprite {
+
+  //this constructor allows you to pass more parameters.
+  constructor(image, speed, speedType, direction, xPosition, yPosition, width, height) {
+    //those that apply to sprite you'd call super for.
+    super(image, speed, speedType, direction, xPosition, yPosition, width, height)
+  }
+
+  //function 1: is a vehicle on screen?
+  isOnScreen() {
+    if (this.xPosition < 0) {
+      return false;
+    }
+    if (this.xPosition > canvas.width) {
+      return false;
+    }
+    return true;
+  }
+
+  //don't need parameters b.c your info is in your class.
+
+  //extended a class. So super is calling the constructor for the parent class (Sprite). You are passing the variables you gave
+
+  moveVehicle() {
+    this.xPosition += this.speed; //this moves all the vehicles.
+
+  }
+
+  resetVehicle() {
+    // this.xPosition = this.startingpXPosition;
+    // console.log(`car report: speed= ${this.speed}, xpos= ${this.xPosition}`)
+
+    //if you are moving to the left, we are setting the starting position all the way to the right.
+    if (this.speed < 0) {
+      this.xPosition = canvas.width;
+        }
+    else {
+      this.xPosition = 0; //else start at 0, which is the left side of the screen.
+    }
 
 
-//CREATE A METHOD TO MOVE LEFT OR RIGHT.
+  //   if (this.startingpXPosition)  {  //if is looking for a boolean. you passed a number into a conditional statement. not 0 so it's true. is the starting position = 0? If not we set the xPosition to the right side of the screen. If it is 0, we set the xPosition to 0.
+  //     this.xPosition = canvas.width
+  // }
+  // else {
+  //   this.xPosition = this.startingXPosition;
+  // }
 
+}
+
+}
 const vehicles = [
-  //FAST =  4 Vehicles
-  car = new Vehicle(carImage, 5, 'fast', 'left', 1300, 120, 128, 128),
-  formula1 = new Vehicle(formula1Image, 5, 'fast', 'left', 1700, 120, 128, 128),
-  // // console.log(Vehicle);
-  truck = new Vehicle(truckImage, 5, 'fast', 'left', 2100, 120, 128, 128),
-  trucktruck = new Vehicle(trucktruckImage, 5, 'fast', 'left', 2500, 120, 128, 128),
-  //SLOW = 5 Vehicles
-  scooter = new Vehicle(scooterImage, 3, 'slow', 'right', -440, 245, 128, 128),
-  segway = new Vehicle(segwayImage, 3, 'slow', 'right', -840, 245, 128, 128),
-  trolleyCart = new Vehicle(trolleyCartImage, 3, 'right', 'right', -1240, 245, 128, 128),
-  tumbleweed = new Vehicle(tumbleweedImage, 3, 'slow', 'right', -1640, 245, 128, 128),
-  //MEDIUM = 5 Vehicles
-  bulldozer = new Vehicle(bulldozerImage, 3, 'medium', 'right', 2300, 380, 128, 128),
-  camper = new Vehicle(camperImage, 3, 'medium', 'left', 1900, 380, 128, 128),
-  crane = new Vehicle(craneImage, 3, 'medium', 'left', 1500, 380, 128, 128),
-  excavator = new Vehicle(excavatorImage, 3, 'medium', 'left', 500, 380, 128, 128),
-  rv = new Vehicle(rvImage, 3, 'medium', 'left', 700, 380, 128, 128),
+
+  //FAST = TOP LANE. 4 VEHICLES.
+  car = new Vehicle(carImage, -3, 'fast', 'left', 1420, 120, 128, 128),
+  formula1 = new Vehicle(formula1Image, -3, 'fast', 'left', 1100, 120, 128, 128),
+  truck = new Vehicle(truckImage, -3, 'fast', 'left', 400, 120, 128, 128),
+  trucktruck = new Vehicle(trucktruckImage, -3, 'fast', 'left', 200, 120, 128, 128),
+
+  //SLOW = MIDDLE LANE. 5 VEHICLES.
+  scooter = new Vehicle(scooterImage, 2, 'slow', 'right', 50, 245, 128, 128),
+  segway = new Vehicle(segwayImage, 2, 'slow', 'right',  550, 245, 128, 128),
+  trolleyCart = new Vehicle(trolleyCartImage, 2, 'right', 'right', 850, 245, 128, 128),
+  tumbleweed = new Vehicle(tumbleweedImage, 2, 'slow', 'right', 1050, 245, 128, 128),
+
+  //MEDIUM = BOTTOM LANE. 5 VEHICLES.
+  bulldozer = new Vehicle(bulldozerImage, -1, 'medium', 'right', 1100, 380, 128, 128),
+  camper = new Vehicle(camperImage, -1, 'medium', 'left', 700, 380, 128, 128),
+  crane = new Vehicle(craneImage, -1, 'medium', 'left', 300, 380, 128, 128),
+  excavator = new Vehicle(excavatorImage, -1, 'medium', 'left', 500, 380, 128, 128),
+  rv = new Vehicle(rvImage, -1, 'medium', 'left', 100, 380, 128, 128),
 ]
+
 
 
 
@@ -149,7 +199,7 @@ const vehicles = [
 // -----------------------------  SPRITE RESET  --------------------------------
 
 const reset = () => {
-  sprite.xPosition = 660;
+  sprite.xPosition = 720;
   sprite.yPosition = 510;
 }
 
@@ -189,31 +239,53 @@ const animate = () => {
 
 
   //------------------------  MAKE THE VEHICLES MOVE  --------------------------
+  for (let car of vehicles) {
+    car.moveVehicle();
+    if (!car.isOnScreen()) {
+      car.resetVehicle();
+    }
+  }
 
-  //FAST, TOP LANE
-  car.xPosition -= car.speed;
-  formula1.xPosition -= formula1.speed;
-  trucktruck.xPosition -= trucktruck.speed;
-  truck.xPosition -= truck.speed;
 
-  //SLOW, MIDDLE LANE
-  tumbleweed.xPosition += tumbleweed.speed;
-  segway.xPosition += segway.speed;
-  scooter.xPosition += scooter.speed;
-  trolleyCart.xPosition += trolleyCart.speed;
+    //--------------------  Sprite's X Position Boundaries  --------------------
+    if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
+      reset();
+    }
 
-  //MEDIUM, BOTTOM LANE
-  bulldozer.xPosition -= bulldozer.speed;
-  camper.xPosition -= camper.speed;
-  crane.xPosition -= crane.speed;
-  excavator.xPosition -= excavator.speed;
-  rv.xPosition -= rv.speed;
-}
+    //--------------------  ADD POINTS: ONE PLAYER GAME  ---------------------
 
+    if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
+      player1Score++;
+      reset();
+      $('#player1Score').text('Your Score: ' + player1Score);
+      console.log(player1Score);
+    }
+
+
+    //------------------- ADD POINTS: TWO PLAYER GAME ----------------------
+
+    if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true)) {
+      player1Score++;
+      reset();
+      // $('#player1Score').text('Player 1 Score: ' + player1Score++);
+      $('#player1Score').text('Player 1 Score: ' + player1Score);
+      console.log(player1Score);
+
+    }
+
+    if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
+      player2Score++;
+      reset();
+      $('#player2Score').text('Player 2 Score: ' + player2Score);
+      console.log(player2Score);
+    }
+  }
+
+animate();
 
 //---------------------------  MAKE SPRITE MOVE  ---------------------------
 
-function moveSprite(e) {
+const moveSprite = (e) => {
   if (e.keyCode == 39) { //R
     sprite.xPosition += 50;
     console.log(sprite);
@@ -230,43 +302,9 @@ function moveSprite(e) {
     sprite.yPosition += 10;
     console.log(sprite);
   }
-
-  if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
-    reset();
-  }
-
-  //---------------------- ADD POINTS: ONE PLAYER GAME -------------------------
-
-  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
-    player1Score++;
-    reset();
-    $('#player1Score').text('Your Score: ' + player1Score);
-    console.log(player1Score);
-  }
-
-
-  //---------------------- ADD POINTS: TWO PLAYER GAME -------------------------
-
-  if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true)) {
-    player1Score++;
-    reset();
-    // $('#player1Score').text('Player 1 Score: ' + player1Score++);
-    $('#player1Score').text('Player 1 Score: ' + player1Score);
-    console.log(player1Score);
-
-  }
-
-  if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
-    player2Score++;
-    reset();
-    $('#player2Score').text('Player 2 Score: ' + player2Score);
-    console.log(player2Score);
-  }
 }
-
-animate();
-document.onkeydown = moveSprite; //do not put () here.
-
+  document.onkeydown = moveSprite; //do not put () here.
+  //MOVE SPRITE FUNCTION IS OVER
 
 
 //MODALS FOR TIE, PLAYER 1 WIN, OR PLAYER 2 WIN.
