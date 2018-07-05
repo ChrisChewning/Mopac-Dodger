@@ -23,6 +23,7 @@ $('#onePlayerBtn').on('click', (e) => {
   $('#onePlayerBtn').hide();
   $('#twoPlayerBtn').hide();
   $('#player1Score').text('Your Score: ');
+  $('#modal').hide();
   setTimer();
 });
 
@@ -34,6 +35,7 @@ $('#twoPlayerBtn').on('click', (e) => {
   $('#twoPlayerBtn').hide();
   $('#player1Score').text('Player 1 Score: ');
   $('#player2Score').text('Player 2 Score: ');
+  $('#modal').hide();
   setTimer(); //starts the timer
 });
 
@@ -104,7 +106,6 @@ class Sprite {
 
 // For this.image, image variables are in the imageVariables.js file, which is linked in index.html.
 
-
 //SPRITE VARIABLE
 const sprite = new Sprite(spriteImage, 4, 'medium', 'all', 660, 510, 128, 128);
 
@@ -133,8 +134,6 @@ const vehicles = [
   excavator = new Vehicle(excavatorImage, 3, 'medium', 'left', 500, 380, 128, 128),
   rv = new Vehicle(rvImage, 3, 'medium', 'left', 700, 380, 128, 128),
 ]
-
-
 
 
 
@@ -259,9 +258,6 @@ function moveSprite(e) {
 
 animate();
 document.onkeydown = moveSprite; //do not put () here.
-
-
-
 
 
 
