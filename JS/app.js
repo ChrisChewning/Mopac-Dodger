@@ -14,6 +14,9 @@ const c = canvas.getContext('2d');
 let player1Score = '';
 let player2Score = '';
 let time = 5;
+let timerProgress = 100;
+$('#progressBar').hide();
+
 
 // --------------------------- BUTTONS IN MODAL --------------------------------
 
@@ -24,6 +27,7 @@ $('#onePlayerBtn').on('click', (e) => {
   $('#twoPlayerBtn').hide();
   $('#player1Score').text('Your Score: ');
   $('#modal').hide();
+  $('#progressBar').show();
   setTimer();
 });
 
@@ -36,18 +40,19 @@ $('#twoPlayerBtn').on('click', (e) => {
   $('#player1Score').text('Player 1 Score: ');
   $('#player2Score').text('Player 2 Score: ');
   $('#modal').hide();
+  $('#progressBar').show();
   setTimer(); //starts the timer
 });
 
 
-//to adapt this to modal =
-// startModal.style.dsiplay = 'none';
-// hide the modal when clicked
 
-
-
-
-
+const progressBarTimer = () => {
+  const bar = document.getElementById('progressBar');
+  const status = document.getElementById('status');
+  // status.innerHTML = timerProgress + '%'; if you wanted to show %
+  bar.value = timerProgress;
+  timerProgress--;
+}
 //-----------------------  ONE OR TWO PLAYERS  -----------------------
 
 //TIMER
@@ -55,6 +60,11 @@ const setTimer = () => {
   const timer = setInterval(() => {
     time--;
     console.log(time); //check it here, not after closing brackets.
+    progressBarTimer(); //sets the progress bar to start counting down on the screen.
+
+//     if(progressBarTimer == 0) {
+//         clearInterval(timer);
+// }
 
 
     //FOR ONE PLAYER GAME. Player 2 is not alive. WORKS. alerts hi and yo
@@ -63,7 +73,6 @@ const setTimer = () => {
       reset();
       clearInterval(timer);
     }
-
 
     //FOR TWO PLAYER GAME. Player 1 is alive, 2 is alive. When timer is up, Player 1 is not alive.
 
@@ -86,7 +95,6 @@ const setTimer = () => {
     }
   }, 1000); //this goes every second.
 }
-
 
 
 // ------------------------------- CLASSES -------------------------------------
@@ -258,9 +266,6 @@ function moveSprite(e) {
 
 animate();
 document.onkeydown = moveSprite; //do not put () here.
-
-
-
 
 
 

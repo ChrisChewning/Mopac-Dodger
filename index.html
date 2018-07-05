@@ -1,37 +1,40 @@
-<html lang="en" dir="ltr">
+<html lang='en' dir='ltr'>
 
 <head>
 
-  <meta charset="utf-8">
+  <meta charset='utf-8'>
   <title>Canvas Resize</title>
-  <link href="css/style.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Raleway" rel="stylesheet">
+  <link href='css/style.css' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Press+Start+2P|Raleway' rel='stylesheet'>
 
   <script src='js/imageVariables.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
 
 </head>
 
 <body>
   <header>
     <h1>Mopac Dodger</h1>
-    <h2><span id="player1Score"></span>
-      <span id="player2Score"></span></h2>
+    <h2><span id='player1Score'></span>
+      <span id='player2Score'></span></h2>
       <!-- <div id="myProgress"> -->
-    <div id="myBar">
+      <progress id='progressBar' value='100' max='100'></progress>
+      <span id='status'></span>
+      <!--optional to put in % next to it.  -->
   </header>
-  <div class= 'modal' id='modal'>
+
+  <div class='modal' id='modal'>
     <h4 id='instructions'>Make it to the other side without crashing!!</h4>
     <button id='onePlayerBtn'>1 Player</button>
     <button id='twoPlayerBtn'>2 Players</button>
 </div>
 
-  </div>
+  <!-- </div> -->
   <canvas id='canvas' width=1440 height=630></canvas>
 
   <footer></footer>
-  <script src="js/app.js" type="text/javascript"></script>
+  <script src='js/app.js' type='text/javascript'></script>
 
 
 </body>

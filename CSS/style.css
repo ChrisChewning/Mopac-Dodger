@@ -3,6 +3,14 @@ body {
 }
 
 
+#progressBar {
+  /* height: 50px; */
+  width: 300px;
+  /* height: 30px; */
+  /* can't style the height for some reason */
+  /* height: 500px; */
+}
+
 #modal {
   width: 40%;
   height: 40%;
@@ -17,6 +25,8 @@ body {
   /* margin: 0 auto; */
   text-align: center;
   vertical-align: middle;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 #instructions {
@@ -32,38 +42,6 @@ button {
   background: pink;
   color: black;
   font-size: 24px;
-}
-
-
-.swal-title {
-  font-size: 32px;
-}
-
-.swal-footer {
-  background-color: rgb(245, 248, 250);
-  margin-top: 32px;
-  border-top: 1px solid #E9EEF1;
-  overflow: hidden;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-content: space-around;
-}
-
-
-
-.swal-button {
-  /* align-items: center; */
-  /* text-align: center; */
-  /* margin-left: 150px; */
-  /* justify-content: center; */
-  padding: 7px 19px;
-  border-radius: 5px;
-  /* background-color: #4962B3; */
-  font-size: 16px;
-  border: 1px solid #3e549a;
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
 }
 
 header {
@@ -103,7 +81,7 @@ footer {
 }
 
 
-#myBar {
+#timerWidthBar {
   width: 30%;
   height: 15px;
   background-color: #f2f2f2;
