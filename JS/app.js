@@ -11,110 +11,106 @@ const c = canvas.getContext('2d');
 
 
 
-//-----------------------  ONE OR TWO PLAYERS  -----------------------
+//STARTS THE GAME
 
-$('#onePlayerBtn').on('click', (e) => {
-  // e.preventDefault();
-console.log('test1');
-setTimer();
-$('#onePlayerBtn').hide();
-$('#twoPlayerBtn').hide();
-});
+// on click
 
-
-$('#twoPlayerBtn').on('click', (e) => {
-  // e.preventDefault();
-console.log('test2')
-setTimer();
-$('#onePlayerBtn').hide();
-$('#twoPlayerBtn').hide();
-});
-
-
-
-
-//Button click on 1 Player mode in the start Game Modal
-onePlayerBtn.onclick = function() {
-	game.player1IsAlive = true;
-	startModel.style.display = "none";
-	// game.chooseCharacter1();
-	startGame();
-}
-
-//Button click on the 2 player mode in the start game modal
-twoPlayerBtn.onclick = function() {
-	game.player1IsAlive = true;
-	game.player2IsAlive = true;
-	startModel.style.display = "none";
-	// game.chooseCharacter1();
-	startGame();
-}
-
-
-
-
-
-//TIMER IS WORKING
-let time = 60;
-const setTimer = () => {
-  const timer = setInterval(() => {
-    time--;
-    console.log(time); //check it here, not after closing brackets.
-  }, 1000); //this goes every second.
-}
-setTimer();
+// const start = () => {
+//show player 1 only.
+//start timer
+//sprite start x position and y position
+// }
 
 
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
-
 //SCORES
-let player2Score = '';
+
 let player1Score = '';
-
-//  BACKGROUND VARIABLE
-const backgroundImage = new Image();
-backgroundImage.src = 'https://opengameart.org/sites/default/files/Toon%20Road%20Texture.png';
-
-//SPRITE IMAGE VARIABLE
-const spriteImage = new Image();
-spriteImage.src = 'images/tacotruck.png'
+let player2Score = '';
+let time = 5;
 
 
-// IMAGES FOR MEDIUM SPEED ICONS
-const bulldozerImage = new Image();
-bulldozerImage.src = 'images/bulldozer.png'
-const camperImage = new Image();
-camperImage.src = 'images/camper.png'
-const craneImage = new Image();
-craneImage.src = 'images/crane.png'
-const excavatorImage = new Image();
-excavatorImage.src = 'images/excavator.png'
-const rvImage = new Image();
-rvImage.src = 'images/rv.png'
+//-----------------------  ONE OR TWO PLAYERS  -----------------------
 
 
-//IMAGES FOR SLOW SPEED ICONS
-const scooterImage = new Image();
-scooterImage.src = 'images/scooter.png'
-const segwayImage = new Image();
-segwayImage.src = 'images/segway.png'
-const trolleyCartImage = new Image();
-trolleyCartImage.src = 'images/trolleyCart.png'
-const tumbleweedImage = new Image();
-tumbleweedImage.src = 'images/tumbleweed.png';
-
-// IMAGES FOR FAST SPEED ICONS
-const carImage = new Image();
-carImage.src = 'images/car.png'
-const formula1Image = new Image();
-formula1Image.src = 'images/formula1.png'
-const truckImage = new Image();
-truckImage.src = 'images/truck.png'
-const trucktruckImage = new Image();
-trucktruckImage.src = 'images/trucktruck.png'
+const setTimer = () => {
+  const timer = setInterval(() => {
+    time--;
+    console.log(time); //check it here, not after closing brackets.
 
 
+//FOR ONE PLAYER GAME. Player 2 is not alive. WORKS. alerts hi and yo
+    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
+      alert('hi');
+      reset();
+      clearInterval(timer);
+    }
+
+
+//FOR TWO PLAYER GAME
+
+//player 2, 1st go 'round. player 1 is alive and 2 is false.
+    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
+      alert('yo');
+      reset();
+      // clearInterval(timer);
+      player1IsAlive = false;
+      console.log(player1IsAlive);
+    }
+
+
+//player 2, 2nd go 'round.
+    if ((time === -5) && (player1IsAlive == false) && (player2IsAlive == true)) {
+      alert('yoooo');
+      reset();
+      clearInterval(timer);
+      player1IsAlive == false;
+      console.log(player1IsAlive);
+    }
+
+
+  }, 1000); //this goes every second.
+
+
+
+}
+
+$('#onePlayerBtn').on('click', (e) => {
+  player1IsAlive = true;
+  player2IsAlive = false;
+
+  $('#onePlayerBtn').hide();
+  $('#twoPlayerBtn').hide();
+
+  $('#player1Score').text('Your Score: ');
+  setTimer();
+});
+
+
+$('#twoPlayerBtn').on('click', (e) => {
+  player1IsAlive = true;
+  player2IsAlive = true;
+
+  $('#onePlayerBtn').hide();
+  $('#twoPlayerBtn').hide();
+
+  $('#player1Score').text('Player 1 Score: ');
+  $('#player2Score').text('Player 2 Score: ');
+  setTimer(); //starts the timer
+});
+
+
+//to adapt this to modal =
+// startModal.style.dsiplay = 'none';
+// hide the modal when clicked
+
+
+
+
+
+
+//Image variables are in the imageVariables.js file, which is linked in index.html.
 
 // ------------------------------- CLASSES -------------------------------------
 
@@ -136,6 +132,9 @@ const sprite = new Sprite(spriteImage, 4, 'medium', 'all', 660, 510, 128, 128);
 
 //VEHICLE
 class Vehicle extends Sprite {}
+
+
+//CREATE A METHOD TO MOVE LEFT OR RIGHT.
 
 const vehicles = [
   //FAST =  4 Vehicles
@@ -164,8 +163,6 @@ const vehicles = [
 
 
 
-
-
 //RESET THE SPRITE WHEN IT GETS HIT OR GETS A POINT OR REACHES THE SIDES OF THE SCREEN.
 const reset = () => {
   sprite.xPosition = 660;
@@ -177,14 +174,14 @@ const reset = () => {
 const detectCollision = () => {
 
   for (let i = 0; i < vehicles.length; i++) {
-  if (sprite.xPosition < vehicles[i].xPosition + vehicles[i].width &&
-    sprite.xPosition + sprite.width > vehicles[i].xPosition &&
-    sprite.yPosition < vehicles[i].yPosition + vehicles[i].height &&
-    sprite.yPosition + sprite.height > vehicles[i].yPosition) {
-    reset();
-    console.log('hi');
+    if (sprite.xPosition < vehicles[i].xPosition + vehicles[i].width &&
+      sprite.xPosition + sprite.width > vehicles[i].xPosition &&
+      sprite.yPosition < vehicles[i].yPosition + vehicles[i].height &&
+      sprite.yPosition + sprite.height > vehicles[i].yPosition) {
+      reset();
+      console.log('oh, hai mark!');
+    }
   }
-}
 }
 
 
@@ -197,11 +194,13 @@ const animate = () => {
   c.drawImage(backgroundImage, 0, 110, 1600, 400);
   c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
-  for (let i = 0; i < vehicles.length; i++) {
-    c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
-    detectCollision(sprite, vehicles[i]);
-    // console.log(detectCollision);
-  }
+
+  //LOOP THROUGH THE VEHICLES TO DRAW THEM.
+  // for (let i = 0; i < vehicles.length; i++) {
+  //   c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
+  //   detectCollision(sprite, vehicles[i]);
+  //   // console.log(detectCollision);
+  // }
 
 
   //------------------------  MAKE THE VEHICLES MOVE  --------------------------
@@ -239,7 +238,7 @@ function moveSprite(e) {
     console.log(sprite);
   }
   if (e.keyCode == 38) { //UP
-    sprite.yPosition -= 10;
+    sprite.yPosition -= 50;
     console.log(sprite);
   }
   if (e.keyCode == 40) { //DOWN
@@ -250,33 +249,44 @@ function moveSprite(e) {
   if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
     reset();
   }
-  if (sprite.yPosition <= -10) {
-    player2Score++;
+
+//TO ADD POINTS ON THE SCOREBOARD FOR ONE PLAYER GAME.
+  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
     player1Score++;
     reset();
-
-    $("#player2Score").text('Player Two: ' + player2Score);
-    $("#player1Score").text('Player One: ' + player1Score);
-    console.log(player1Score);
-    console.log(player2Score);
+      $('#player1Score').text('Your Score: ' + player1Score);
+      console.log(player1Score);
   }
 
+
+
+
+//TO ADD POINTS ON THE SCOREBOARD FOR ONE PLAYER GAME.
+  if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true
+  )) {
+    player1Score++;
+    reset();
+    // $('#player1Score').text('Player 1 Score: ' + player1Score++);
+     $('#player1Score').text('Player 1 Score: ' + player1Score);
+   console.log(player1Score);
+
+ }
+
+ if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
+   player2Score++;
+   reset();
+     $('#player2Score').text('Player 2 Score: ' + player2Score);
+     console.log(player2Score);
+
+
 }
+  }
+
 animate();
 document.onkeydown = moveSprite; //do not put () here.
 
 
 
-
-//STARTS THE GAME
-
-// on click
-
-// const start = () => {
-  //show player 1 only.
-  //start timer
-  //sprite start x position and y position
-// }
 
 
 
