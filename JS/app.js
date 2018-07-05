@@ -1,7 +1,7 @@
 // window.onLoad = function() {
 
 
-//-----------------------  CANVAS & TIMER  -----------------------
+//----------------------------------  CANVAS   ---------------------------------
 
 //CANVAS
 const canvas = document.querySelector('canvas'); //DOM selector
@@ -9,80 +9,19 @@ const canvas = document.querySelector('canvas'); //DOM selector
 const c = canvas.getContext('2d');
 
 
-
-
-//STARTS THE GAME
-
-// on click
-
-// const start = () => {
-//show player 1 only.
-//start timer
-//sprite start x position and y position
-// }
-
-
 // --------------------------- GLOBAL VARIABLES --------------------------------
-
-//SCORES
 
 let player1Score = '';
 let player2Score = '';
 let time = 5;
 
-
-//-----------------------  ONE OR TWO PLAYERS  -----------------------
-
-
-const setTimer = () => {
-  const timer = setInterval(() => {
-    time--;
-    console.log(time); //check it here, not after closing brackets.
-
-
-//FOR ONE PLAYER GAME. Player 2 is not alive. WORKS. alerts hi and yo
-    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
-      alert('hi');
-      reset();
-      clearInterval(timer);
-    }
-
-
-//FOR TWO PLAYER GAME
-
-//player 2, 1st go 'round. player 1 is alive and 2 is false.
-    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
-      alert('yo');
-      reset();
-      // clearInterval(timer);
-      player1IsAlive = false;
-      console.log(player1IsAlive);
-    }
-
-
-//player 2, 2nd go 'round.
-    if ((time === -5) && (player1IsAlive == false) && (player2IsAlive == true)) {
-      alert('yoooo');
-      reset();
-      clearInterval(timer);
-      player1IsAlive == false;
-      console.log(player1IsAlive);
-    }
-
-
-  }, 1000); //this goes every second.
-
-
-
-}
+// --------------------------- BUTTONS IN MODAL --------------------------------
 
 $('#onePlayerBtn').on('click', (e) => {
   player1IsAlive = true;
   player2IsAlive = false;
-
   $('#onePlayerBtn').hide();
   $('#twoPlayerBtn').hide();
-
   $('#player1Score').text('Your Score: ');
   setTimer();
 });
@@ -91,10 +30,8 @@ $('#onePlayerBtn').on('click', (e) => {
 $('#twoPlayerBtn').on('click', (e) => {
   player1IsAlive = true;
   player2IsAlive = true;
-
   $('#onePlayerBtn').hide();
   $('#twoPlayerBtn').hide();
-
   $('#player1Score').text('Player 1 Score: ');
   $('#player2Score').text('Player 2 Score: ');
   setTimer(); //starts the timer
@@ -109,8 +46,46 @@ $('#twoPlayerBtn').on('click', (e) => {
 
 
 
+//-----------------------  ONE OR TWO PLAYERS  -----------------------
 
-//Image variables are in the imageVariables.js file, which is linked in index.html.
+//TIMER
+const setTimer = () => {
+  const timer = setInterval(() => {
+    time--;
+    console.log(time); //check it here, not after closing brackets.
+
+
+    //FOR ONE PLAYER GAME. Player 2 is not alive. WORKS. alerts hi and yo
+    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
+      alert('hi');
+      reset();
+      clearInterval(timer);
+    }
+
+
+    //FOR TWO PLAYER GAME. Player 1 is alive, 2 is alive. When timer is up, Player 1 is not alive.
+
+    //player 2, 1st go 'round. player 1 is alive and 2 is false.
+    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
+      alert('yo');
+      reset();
+      // clearInterval(timer);
+      player1IsAlive = false;
+      console.log(player1IsAlive);
+    }
+
+    //player 2, 2nd go 'round.
+    if ((time === -5) && (player1IsAlive == false) && (player2IsAlive == true)) {
+      alert('yoooo');
+      reset();
+      clearInterval(timer);
+      player1IsAlive == false;
+      console.log(player1IsAlive);
+    }
+  }, 1000); //this goes every second.
+}
+
+
 
 // ------------------------------- CLASSES -------------------------------------
 
@@ -126,6 +101,9 @@ class Sprite {
     this.height = height;
   }
 }
+
+// For this.image, image variables are in the imageVariables.js file, which is linked in index.html.
+
 
 //SPRITE VARIABLE
 const sprite = new Sprite(spriteImage, 4, 'medium', 'all', 660, 510, 128, 128);
@@ -143,14 +121,12 @@ const vehicles = [
   // // console.log(Vehicle);
   truck = new Vehicle(truckImage, 5, 'fast', 'left', 2100, 120, 128, 128),
   trucktruck = new Vehicle(trucktruckImage, 5, 'fast', 'left', 2500, 120, 128, 128),
-  // //
-  // // //SLOW = 5 Vehicles
+  //SLOW = 5 Vehicles
   scooter = new Vehicle(scooterImage, 3, 'slow', 'right', -440, 245, 128, 128),
   segway = new Vehicle(segwayImage, 3, 'slow', 'right', -840, 245, 128, 128),
   trolleyCart = new Vehicle(trolleyCartImage, 3, 'right', 'right', -1240, 245, 128, 128),
   tumbleweed = new Vehicle(tumbleweedImage, 3, 'slow', 'right', -1640, 245, 128, 128),
-  // //
-  // // //MEDIUM = 5 Vehicles
+  //MEDIUM = 5 Vehicles
   bulldozer = new Vehicle(bulldozerImage, 3, 'medium', 'right', 2300, 380, 128, 128),
   camper = new Vehicle(camperImage, 3, 'medium', 'left', 1900, 380, 128, 128),
   crane = new Vehicle(craneImage, 3, 'medium', 'left', 1500, 380, 128, 128),
@@ -163,14 +139,15 @@ const vehicles = [
 
 
 
-//RESET THE SPRITE WHEN IT GETS HIT OR GETS A POINT OR REACHES THE SIDES OF THE SCREEN.
+// -----------------------------  SPRITE RESET  --------------------------------
+
 const reset = () => {
   sprite.xPosition = 660;
   sprite.yPosition = 510;
 }
 
+// --------------------------  COLLISION FUNCTION  -----------------------------
 
-// Algorithm for checking if two squared objects collide. Resets if all conditions are met.
 const detectCollision = () => {
 
   for (let i = 0; i < vehicles.length; i++) {
@@ -186,7 +163,7 @@ const detectCollision = () => {
 
 
 //-------------------------  DRAW THE VEHICLES  ---------------------------
-// what image, x-starting pt., y-starting pt., width, height
+//formula: what image, x-starting pt., y-starting pt., width, height
 
 const animate = () => {
   c.clearRect(0, 0, 1600, 650);
@@ -195,12 +172,13 @@ const animate = () => {
   c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
 
+  //----------------------  LOOP THROUGH THE VEHICLES  -------------------------
   //LOOP THROUGH THE VEHICLES TO DRAW THEM.
-  // for (let i = 0; i < vehicles.length; i++) {
-  //   c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
-  //   detectCollision(sprite, vehicles[i]);
-  //   // console.log(detectCollision);
-  // }
+  for (let i = 0; i < vehicles.length; i++) {
+    c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
+    detectCollision(sprite, vehicles[i]);
+    // console.log(detectCollision);
+  }
 
 
   //------------------------  MAKE THE VEHICLES MOVE  --------------------------
@@ -250,37 +228,34 @@ function moveSprite(e) {
     reset();
   }
 
-//TO ADD POINTS ON THE SCOREBOARD FOR ONE PLAYER GAME.
+  //---------------------- ADD POINTS: ONE PLAYER GAME -------------------------
+
   if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
     player1Score++;
     reset();
-      $('#player1Score').text('Your Score: ' + player1Score);
-      console.log(player1Score);
+    $('#player1Score').text('Your Score: ' + player1Score);
+    console.log(player1Score);
   }
 
 
+  //---------------------- ADD POINTS: TWO PLAYER GAME -------------------------
 
-
-//TO ADD POINTS ON THE SCOREBOARD FOR ONE PLAYER GAME.
-  if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true
-  )) {
+  if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true)) {
     player1Score++;
     reset();
     // $('#player1Score').text('Player 1 Score: ' + player1Score++);
-     $('#player1Score').text('Player 1 Score: ' + player1Score);
-   console.log(player1Score);
+    $('#player1Score').text('Player 1 Score: ' + player1Score);
+    console.log(player1Score);
 
- }
-
- if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
-   player2Score++;
-   reset();
-     $('#player2Score').text('Player 2 Score: ' + player2Score);
-     console.log(player2Score);
-
-
-}
   }
+
+  if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
+    player2Score++;
+    reset();
+    $('#player2Score').text('Player 2 Score: ' + player2Score);
+    console.log(player2Score);
+  }
+}
 
 animate();
 document.onkeydown = moveSprite; //do not put () here.

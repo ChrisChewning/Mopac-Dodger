@@ -58,7 +58,7 @@ header {
   vertical-align: middle;
   /* margin-bottom: ; */
   width: 100%;
-  height: 16%;
+  height: 20%;
 }
 
 /* h1 {
@@ -86,4 +86,14 @@ footer {
   margin-bottom: 0px;
   background-color: #FFFCF2;
   border: 1px solid black;
+}
+
+
+#myBar {
+  width: 30%;
+  height: 15px;
+  background-color: #f2f2f2;
+  border: 1px solid black;
+  margin: 0 auto;
+  /* border-radius: 10%; */
 }
