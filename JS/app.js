@@ -86,26 +86,25 @@ const setTimer = () => {
 const createHTML = (id, innerText, buttonTexts) => {
 
   //MODAL
-  let endOfGameModals = document.createElement('div'); //creates a div
-  endOfGameModals.className = 'modal'; //gives the div a class name of modal
-  endOfGameModals.id = id; //gives the div an id of id b.c you passed it as a parameter
+  let endOfGameModals = document.createElement('div');
+  endOfGameModals.className = 'modal';
+  endOfGameModals.id = id;
 
   //H4 TEXT
-  let myh4 = document.createElement('h4'); //creates an h4 element.
-  myh4.innerText = innerText; //crates text inside the h4 element.
-  myh4.className = 'modalh4'; //creates a class name for the h4.
-  endOfGameModals.append(myh4); //appends the span to the div.
-  // endOfGameModals.append(document.createElement('br'));
+  let myh4 = document.createElement('h4');
+  myh4.innerText = innerText;
+  myh4.className = 'modalh4';
+  endOfGameModals.append(myh4);
 
   //BUTTONS
-  for (i = 0; i < buttonTexts.length; i++) { //loop through buttonTexts.length.
-    let myButton = document.createElement('button'); //create button/buttons.
-    myButton.innerText = buttonTexts[i]; //give each button text.
-    myButton.id = id + 'button' + i; //give each button an id.
-    myButton.className = 'modalButton'; //give all the buttons a class.
-    endOfGameModals.append(myButton); //append buttons to the modal.
+  for (i = 0; i < buttonTexts.length; i++) {
+    let myButton = document.createElement('button');
+    myButton.innerText = buttonTexts[i];
+    myButton.id = id + 'button' + i;
+    myButton.className = 'modalButton';
+    endOfGameModals.append(myButton);
   }
-  return endOfGameModals; //
+  return endOfGameModals;
 }
 
 //CREATES MODALS
@@ -130,8 +129,8 @@ class Sprite {
     this.speed = speed;
     this.speedType = speedType;
     this.direction = direction;
-    this.startingpXPosition = xPosition; //this allows it to be redrawn
-    this.xPosition = xPosition; //this changes when you move the car with speed.
+    this.startingpXPosition = xPosition; 
+    this.xPosition = xPosition;
     this.yPosition = yPosition;
     this.width = width;
     this.height = height;
@@ -363,10 +362,6 @@ $('#p1button0').on('click', (e) => {
   time = 60;
   reset();
 });
-
-// $('#p1button1').on('click', (e) => {
-//   $(p1Modal).detach();;
-// });
 
 //PLAYER 2'S TURN BUTTON
   $('#p2tbutton0').on('click', (e) => {

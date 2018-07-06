@@ -73,6 +73,31 @@ https://stackoverflow.com/questions/28498014/canvas-drawimage-poor-quality
 CSS FLEXBOX: https://stackoverflow.com/questions/19026884/flexbox-center-horizontally-and-vertically
 
 
+-----------------EXPLANATION----------
+//MODAL
+let endOfGameModals = document.createElement('div'); //creates a div
+endOfGameModals.className = 'modal'; //gives the div a class name of modal
+endOfGameModals.id = id; //gives the div an id of id b.c you passed it as a parameter
+
+//H4 TEXT
+let myh4 = document.createElement('h4'); //creates an h4 element.
+myh4.innerText = innerText; //crates text inside the h4 element.
+myh4.className = 'modalh4'; //creates a class name for the h4.
+endOfGameModals.append(myh4); //appends the span to the div.
+// endOfGameModals.append(document.createElement('br'));
+
+//BUTTONS
+for (i = 0; i < buttonTexts.length; i++) { //loop through buttonTexts.length.
+  let myButton = document.createElement('button'); //create button/buttons.
+  myButton.innerText = buttonTexts[i]; //give each button text.
+  myButton.id = id + 'button' + i; //give each button an id.
+  myButton.className = 'modalButton'; //give all the buttons a class.
+  endOfGameModals.append(myButton); //append buttons to the modal.
+}
+return endOfGameModals; //
+}
+
+
 
 2 Tried randomizing the color of images but doubt it can work.
 
@@ -90,7 +115,3 @@ CSS FLEXBOX: https://stackoverflow.com/questions/19026884/flexbox-center-horizon
   // //     c.strokeStyle = 'green';
   // //   }
   // //   console.log(randomize); //randomize function is working.
-
-
-
-To create my own modal later:
