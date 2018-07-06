@@ -56,7 +56,6 @@ const setTimer = () => {
     //-------------------------  FOR ONE PLAYER GAME  --------------------------
 
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
-      alert('hi');
       reset();
       clearInterval(timer);
     }
@@ -65,7 +64,6 @@ const setTimer = () => {
 
     //1st go 'round: both players are alive.
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
-      alert('yo');
       reset();
       clearInterval(timer);
       player1IsAlive = false;
@@ -74,7 +72,6 @@ const setTimer = () => {
 
     //player 2, 2nd go 'round.
     if ((time === -5) && (player1IsAlive == false) && (player2IsAlive == true)) {
-      alert('yoooo');
       reset();
       clearInterval(timer);
       player1IsAlive == false;
@@ -258,7 +255,7 @@ const animate = () => {
 
   for (let i = 0; i < vehicles.length; i++) {
     c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
-    // detectCollision(sprite, vehicles[i]);
+    detectCollision(sprite, vehicles[i]);
   }
 
 
@@ -367,9 +364,9 @@ $('#p1button0').on('click', (e) => {
   reset();
 });
 
-$('#p1button1').on('click', (e) => {
-  $(p1Modal).detach();;
-});
+// $('#p1button1').on('click', (e) => {
+//   $(p1Modal).detach();;
+// });
 
 //PLAYER 2'S TURN BUTTON
   $('#p2tbutton0').on('click', (e) => {
