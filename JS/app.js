@@ -6,9 +6,11 @@ const c = canvas.getContext('2d');
 
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
+var testBoolean = false;
+
 let player1Score = '';
 let player2Score = '';
-let time = 60;
+let time = 5;
 let timerProgress = 60;
 $('#progressBar').hide();
 
@@ -35,53 +37,7 @@ $('#twoPlayerBtn').on('click', (e) => {
 });
 
 
-//------------------------------  TIMER BAR  -----------------------------------
-
-const progressBarTimer = () => {
-  const bar = document.getElementById('progressBar');
-  const status = document.getElementById('status');
-  bar.value = timerProgress;
-  timerProgress--;
-}
-
-//--------------------------------  TIMER  ---------------------------------
-
-const setTimer = () => {
-  const timer = setInterval(() => {
-    time--;
-    console.log(time); //check it here, not after closing brackets.
-    progressBarTimer();
-
-
-    //-------------------------  FOR ONE PLAYER GAME  --------------------------
-
-    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
-      reset();
-      clearInterval(timer);
-    }
-
-    //-------------------------  FOR TWO PLAYER GAME  --------------------------
-
-    //1st go 'round: both players are alive.
-    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
-      reset();
-      clearInterval(timer);
-      player1IsAlive = false;
-      console.log(player1IsAlive);
-    }
-
-    //player 2, 2nd go 'round.
-    if ((time === 0) && (player1IsAlive == false) && (player2IsAlive == true)) {
-      reset();
-      clearInterval(timer);
-      player1IsAlive == false;
-      console.log(player1IsAlive);
-    }
-  }, 1000);
-}
-
-
-//----------------------  CREATE END OF GAME MODALS  ---------------------------
+//----------------------  CREATE END OF GAME MODALS  -------------------------
 
 const createHTML = (id, innerText, buttonTexts) => {
 
@@ -107,6 +63,7 @@ const createHTML = (id, innerText, buttonTexts) => {
   return endOfGameModals;
 }
 
+
 //CREATES MODALS
 
 let p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again']);
@@ -122,22 +79,124 @@ let p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many e
 
 
 
+
+  //--------  THESE DON'T WORK  ---------
+
+  $('#p1button0').on('click', (e) => {
+    $('#p1').detach();
+    time = 60;
+    reset();
+  });
+
+  console.log($('#p1button0'));
+
+  //P2 TURN (only has one button)
+  $('#p2tbutton0').on('click', (e) => {
+    $('#p2t').detach();
+    time = 60;
+    reset();
+  });
+
+  //TIE BUTTONS
+  $('#tiebutton0').on('click', (e) => {
+    $('#tie').detach();
+    time = 60;
+    reset();
+  });
+
+  $('#tiebutton1').on('click', (e) => {
+    $('#tie').detach();
+  });
+
+  //PLAYER 1 WINS BUTTONS
+  $('#p1wbutton0').on('click', (e) => {
+    $('#p1w').detach();
+    // console.log(YO);
+    time = 60;
+    reset();
+  });
+
+  $('#p1wbutton1').on('click', (e) => {
+    $('#p1w').detach();
+  });
+
+  //PLAYER 2 WINS BUTTONS
+  $('#p2wbutton0').on('click', (e) => {
+    $('#p2w').detach();
+    time = 60;
+    reset();
+  });
+
+  $('#p2wbutton1').on('click', (e) => {
+    $('#p2w').detach();
+  });
+
+
+
+
+
+//------------------------------  TIMER BAR  -----------------------------------
+
+const progressBarTimer = () => {
+  const bar = document.getElementById('progressBar');
+  const status = document.getElementById('status');
+  bar.value = timerProgress;
+  timerProgress--;
+}
+
+//--------------------------------  TIMER  ---------------------------------
+
+const setTimer = () => {
+  const timer = setInterval(() => {
+    time--;
+    // console.log(time); //check it here, not after closing brackets.
+    progressBarTimer();
+
+
+    //-------------------------  FOR ONE PLAYER GAME  --------------------------
+
+    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
+      reset();
+      clearInterval(timer);
+    }
+
+    //-------------------------  FOR TWO PLAYER GAME  --------------------------
+
+    //1st go 'round: both players are alive.
+    if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
+      reset();
+      clearInterval(timer);
+      player1IsAlive = false;
+      // console.log(player1IsAlive);
+    }
+
+    //player 2, 2nd go 'round.
+    if ((time === 0) && (player1IsAlive == false) && (player2IsAlive == true)) {
+      reset();
+      clearInterval(timer);
+      player1IsAlive == false;
+      // console.log(player1IsAlive);
+    }
+  }, 1000);
+}
+
+
 //---------------------------  MODAL BUTTONS ON CLICKS  ----------------------
 
 
-//PLAYER 1 PLAY AGAIN BUTTON
-$('#p1button0').on('click', (e) => {
-  $(p1Modal).detach();
-  time = 60;
-  reset();
-});
-
-//PLAYER 2'S TURN BUTTON
-$('#p2tbutton0').on('click', (e) => {
-  $(p2tModal).detach();
-  time = 60;
-  reset();
-});
+// //PLAYER 1 PLAY AGAIN BUTTON
+// $('#p1button0').on('click', (e) => {
+//   $(p1Modal).detach();
+//   time = 60;
+//   reset();
+// });
+//
+// //PLAYER 2'S TURN BUTTON
+// $('#p2tbutton0').on('click', (e) => {
+//   $(p2tModal).detach();
+//   time = 60;
+//   reset();
+// });
 
 
 
@@ -255,7 +314,7 @@ const detectCollision = () => {
       sprite.yPosition < vehicles[i].yPosition + vehicles[i].height &&
       sprite.yPosition + sprite.height > vehicles[i].yPosition) {
       reset();
-      console.log('oh, hai mark!');
+      // console.log('oh, hai mark!');
     }
   }
 }
@@ -268,6 +327,11 @@ const animate = () => {
   requestAnimationFrame(animate);
   c.drawImage(backgroundImage, 0, 110, 1600, 400);
   c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
+
+
+
+
+
 
 
   //---------------------------  DRAW THE VEHICLES  ----------------------------
@@ -304,7 +368,7 @@ const animate = () => {
 
   //-----------------------  ADD POINTS: TWO PLAYER GAME  ----------------------
 
-  if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true)) {
+  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == true) {
     player1Score++;
     reset();
     $('#player1Score').text('Player 1 Score: ' + player1Score);
@@ -322,19 +386,19 @@ const animate = () => {
   const moveSprite = (e) => {
     if (e.keyCode == 39) { //R
       sprite.xPosition += 50;
-      console.log(sprite);
+      // console.log(sprite);
     }
     if (e.keyCode == 37) { //L
       sprite.xPosition -= 10;
-      console.log(sprite);
+      // console.log(sprite);
     }
     if (e.keyCode == 38) { //UP
       sprite.yPosition -= 50;
-      console.log(sprite);
+      // console.log(sprite);
     }
     if (e.keyCode == 40) { //DOWN
       sprite.yPosition += 10;
-      console.log(sprite);
+      // console.log(sprite);
     }
   }
   document.onkeydown = moveSprite; //do not put () here.
@@ -343,87 +407,39 @@ const animate = () => {
   //---------------------------  END OF GAME CHECKS ----------------------------
 
   //PLAYER 1 ONLY
-  if (time === 0 && player1IsAlive == true && player2IsAlive == false) {
+  if (time === 0 && player1IsAlive == true && player2IsAlive == false && testBoolean == false) {
+    testBoolean == true;
+clearInterval();
     $('body').append(p1Modal);
-    // clearInterval();
+
     //P1 Play again? (only has one button)
 
   }
 
   //PLAYER 2 TURN
   if (time === 0 && player1IsAlive == true && player2IsAlive == true) {
+clearInterval();
     $('body').append(p2tModal);
-    // clearInterval();
+
   }
 
   //TIE
   if (time === 0 && player1IsAlive == false && player1Score == player2Score) {
     $('body').append(tieModal);
-    // clearInterval();
+    clearInterval();
   }
 
   //PLAYER 1 WIN
   if (time === 0 && player1IsAlive == false && player1Score > player2Score) {
     $('body').append(p1wModal);
-    // clearInterval();
+    clearInterval();
   }
 
   //PLAYER 2 WIN
   if (time === 0 && player1IsAlive == false && player2Score > player1Score) {
     $('body').append(p2wModal);
-    // clearInterval();
+    clearInterval();
   }
-
-
-  //--------  THESE DON'T WORK  ---------
-
-  $('#p1button0').on('click', (e) => {
-    $(p1Modal).detach();
-    time = 60;
-    reset();
-  });
-
-  //P2 TURN (only has one button)
-  $('#p2tbutton0').on('click', (e) => {
-    $(p2tModal).detach();
-    time = 60;
-    reset();
-  });
-
-  //TIE BUTTONS
-  $('#tiebutton0').on('click', (e) => {
-    $(tieModal).detach();
-    time = 60;
-    reset();
-  });
-
-  $('#tiebutton1').on('click', (e) => {
-    $(tieModal).detach();
-  });
-
-  //PLAYER 1 WINS BUTTONS
-  $('#p1wbutton0').on('click', (e) => {
-    $(p1wModal).detach();
-    console.log(YO);
-    time = 60;
-    reset();
-  });
-
-  $('#p1wbutton1').on('click', (e) => {
-    $(p1wModal).detach();
-  });
-
-  //PLAYER 2 WINS BUTTONS
-  $('#p2wbutton0').on('click', (e) => {
-    $(p2wModal).detach();
-    time = 60;
-    reset();
-  });
-
-  $('#p2wbutton1').on('click', (e) => {
-    $(p2wModal).detach();
-  });
-
 
 }
 //------------------------------  DRAWS IT ALL OUT  --------------------------
