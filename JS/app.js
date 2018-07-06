@@ -1,7 +1,6 @@
 //----------------------------------  CANVAS   ---------------------------------
 
-const canvas = document.querySelector('canvas'); //DOM selector
-//jQuery selector needed instead
+const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 
@@ -9,7 +8,7 @@ const c = canvas.getContext('2d');
 
 let player1Score = '';
 let player2Score = '';
-let time = 5;
+let time = 60;
 let timerProgress = 100;
 $('#progressBar').hide();
 
@@ -19,7 +18,7 @@ $('#onePlayerBtn').on('click', (e) => {
   player1IsAlive = true;
   player2IsAlive = false;
   $('#player1Score').text('Your Score: ');
-  $('#modal').hide();
+  $('#onStartModal').hide();
   $('#progressBar').show();
   setTimer();
 });
@@ -30,33 +29,28 @@ $('#twoPlayerBtn').on('click', (e) => {
   player2IsAlive = true;
   $('#player1Score').text('Player 1 Score: ');
   $('#player2Score').text('Player 2 Score: ');
-  $('#modal').hide();
+  $('#onStartModal').hide();
   $('#progressBar').show();
   setTimer();
 });
+
 
 //------------------------------  TIMER BAR  -----------------------------------
 
 const progressBarTimer = () => {
   const bar = document.getElementById('progressBar');
   const status = document.getElementById('status');
-  // status.innerHTML = timerProgress + '%'; if you wanted to show %
   bar.value = timerProgress;
   timerProgress--;
 }
 
-//----------------------------  ONE OR TWO PLAYERS  ----------------------------
+    //--------------------------------  TIMER  ---------------------------------
 
-//TIMER
 const setTimer = () => {
   const timer = setInterval(() => {
     time--;
     console.log(time); //check it here, not after closing brackets.
-    progressBarTimer(); //sets the progress bar to start counting down on the screen.
-
-    //     if(progressBarTimer == 0) {
-    //         clearInterval(timer);
-    // }
+    progressBarTimer();
 
 
     //-------------------------  FOR ONE PLAYER GAME  --------------------------
@@ -73,7 +67,7 @@ const setTimer = () => {
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
       alert('yo');
       reset();
-      // clearInterval(timer);
+      clearInterval(timer);
       player1IsAlive = false;
       console.log(player1IsAlive);
     }
@@ -90,7 +84,7 @@ const setTimer = () => {
 }
 
 
-   //------------------------  END OF GAME MODALS  -----------------------------
+//------------------------  END OF GAME MODALS  -----------------------------
 
 const createHTML = (id, innerText, buttonTexts) => {
 
@@ -100,9 +94,9 @@ const createHTML = (id, innerText, buttonTexts) => {
   endOfGameModals.id = id; //gives the div an id of id b.c you passed it as a parameter
 
   //H4 TEXT
-  let myh4 = document.createElement('h4'); //creates a span element.
-  myh4.innerText = innerText; //crates text inside the span element.
-  myh4.className = 'modalSpan'; //creates a class name for the span.
+  let myh4 = document.createElement('h4'); //creates an h4 element.
+  myh4.innerText = innerText; //crates text inside the h4 element.
+  myh4.className = 'modalh4'; //creates a class name for the h4.
   endOfGameModals.append(myh4); //appends the span to the div.
   // endOfGameModals.append(document.createElement('br'));
 
@@ -117,11 +111,17 @@ const createHTML = (id, innerText, buttonTexts) => {
   return endOfGameModals; //
 }
 
-// let Modal = createHTML('hi', 'yo', ['buttonSSS'])
+//CREATES MODALS
 
-// let Modal = (endOfGameModals) => {
-//   document.body.append(createHTML);
-// }
+let p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again']);
+
+let p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START']);
+
+let tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
+
+let p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH']);
+
+let p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH']);
 
 
 
@@ -151,7 +151,7 @@ class Vehicle extends Sprite {
 
   //this constructor allows you to pass more parameters.
   constructor(image, speed, speedType, direction, xPosition, yPosition, width, height) {
-    //those that apply to sprite you'd call super for.
+  //those that apply to sprite you'd call super for.
     super(image, speed, speedType, direction, xPosition, yPosition, width, height)
   }
 
@@ -202,10 +202,10 @@ class Vehicle extends Sprite {
 const vehicles = [
 
   //FAST = TOP LANE. 4 VEHICLES.
-  car = new Vehicle(carImage, -3, 'fast', 'left', 1420, 120, 112, 112),
+  car = new Vehicle(carImage, -3, 'fast', 'left', 1420, 120, 96, 96),
   formula1 = new Vehicle(formula1Image, -3, 'fast', 'left', 1100, 120, 112, 112),
   truck = new Vehicle(truckImage, -3, 'fast', 'left', 400, 120, 112, 112),
-  trucktruck = new Vehicle(trucktruckImage, -3, 'fast', 'left', 200, 120, 112, 112),
+  deliveryTruck = new Vehicle(deliveryTruckImage, -3, 'fast', 'left', 200, 120, 112, 112),
 
   //SLOW = MIDDLE LANE. 5 VEHICLES.
   scooter = new Vehicle(scooterImage, 2, 'slow', 'right', 50, 245, 112, 112),
@@ -222,14 +222,14 @@ const vehicles = [
 ]
 
 
-// -----------------------------  SPRITE RESET  --------------------------------
+//-----------------------------  SPRITE RESET  ---------------------------------
 
 const reset = () => {
   sprite.xPosition = 720;
   sprite.yPosition = 510;
 }
 
-// --------------------------  COLLISION FUNCTION  -----------------------------
+//---------------------------  COLLISION FUNCTION  -----------------------------
 
 const detectCollision = () => {
 
@@ -244,8 +244,8 @@ const detectCollision = () => {
   }
 }
 
-//---------------------------  DRAW THE VEHICLES  ------------------------------
-//formula: what image, x-starting pt., y-starting pt., width, height
+//------------------------  BEGIN ANIMATION FUNCTION  --------------------------
+
 
 const animate = () => {
   c.clearRect(0, 0, 1600, 650);
@@ -255,6 +255,7 @@ const animate = () => {
 
 
   //---------------------------  DRAW THE VEHICLES  ----------------------------
+
   for (let i = 0; i < vehicles.length; i++) {
     c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
     // detectCollision(sprite, vehicles[i]);
@@ -262,6 +263,7 @@ const animate = () => {
 
 
   //------------------------  MAKE THE VEHICLES MOVE  --------------------------
+
   for (let car of vehicles) {
     car.moveVehicle();
     if (!car.isOnScreen()) {
@@ -269,139 +271,146 @@ const animate = () => {
     }
   }
 
-
-  //------------------------  SPRITE'S BOUNDARIES  -------------------------
+  //-------------------------  SPRITE'S BOUNDARIES  ----------------------------
 
   if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
     reset();
   }
 
-  //--------------------  ADD POINTS: ONE PLAYER GAME  ---------------------
+  //-----------------------  ADD POINTS: ONE PLAYER GAME  ----------------------
 
   if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
     player1Score++;
     reset();
     $('#player1Score').text('Your Score: ' + player1Score);
-    console.log(player1Score);
   }
 
 
-  //------------------- ADD POINTS: TWO PLAYER GAME ----------------------
+  //-----------------------  ADD POINTS: TWO PLAYER GAME  ----------------------
 
   if ((sprite.yPosition <= -10) && (player1IsAlive == true) && (player2IsAlive == true)) {
     player1Score++;
     reset();
-    // $('#player1Score').text('Player 1 Score: ' + player1Score++);
     $('#player1Score').text('Player 1 Score: ' + player1Score);
-    console.log(player1Score);
-
   }
 
   if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
     player2Score++;
     reset();
     $('#player2Score').text('Player 2 Score: ' + player2Score);
-    console.log(player2Score);
   }
 
-  if ((time === 0) && (player1Score == player2Score)) {
-    let tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
+
+  //---------------------------  MAKE SPRITE MOVE  ---------------------------
+
+  const moveSprite = (e) => {
+    if (e.keyCode == 39) { //R
+      sprite.xPosition += 50;
+      console.log(sprite);
+    }
+    if (e.keyCode == 37) { //L
+      sprite.xPosition -= 10;
+      console.log(sprite);
+    }
+    if (e.keyCode == 38) { //UP
+      sprite.yPosition -= 50;
+      console.log(sprite);
+    }
+    if (e.keyCode == 40) { //DOWN
+      sprite.yPosition += 10;
+      console.log(sprite);
+    }
+  }
+  document.onkeydown = moveSprite; //do not put () here.
+
+
+  //---------------------------  END OF GAME CHECKS ----------------------------
+
+  //PLAYER 1 ONLY
+  if (time === 0 && player1IsAlive == true && player2IsAlive == false) {
+    $('body').append(p1Modal);
+    clearInterval();
+  }
+
+  //PLAYER 2 TURN
+  if (time === 0 && player1IsAlive == true && player2IsAlive == true) {
+    $('body').append(p2tModal);
+    clearInterval();
+  }
+
+//TIE
+  if (time === 0 && player1IsAlive == false && player1Score == player2Score) {
     $('body').append(tieModal);
+    clearInterval();
   }
 
-  if ((time === 0) && (player1Score > player2Score)) {
-    let player1WinsModal = createHTML('P1W', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH']);
-    $('body').append(player1WinsModal);
+//PLAYER 1 WIN
+  if (time === 0 && player1IsAlive == false && player1Score > player2Score) {
+    $('body').append(p1wModal);
+    clearInterval();
   }
-  if ((time === 0) && (player2Score > player1Score)) {
-    let player2WinsModal = createHTML('P2W', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH']);
-    $('body').append(player2WinsModal);
+
+//PLAYER 2 WIN
+  if (time === 0 && player1IsAlive == false && player2Score > player1Score) {
+    $('body').append(p2wModal);
+    clearInterval();
   }
+
+
+  //---------------------------  MODAL BUTTONS ON CLICKS  ----------------------
+
+
+//PLAYER 1 PLAY AGAIN BUTTON
+$('#p1button0').on('click', (e) => {
+  $(p1Modal).detach();;
+  time = 60;
+  reset();
+});
+
+$('#p1button1').on('click', (e) => {
+  $(p1Modal).detach();;
+});
+
+//PLAYER 2'S TURN BUTTON
+  $('#p2tbutton0').on('click', (e) => {
+    $(p2tModal).detach();;
+    time = 60;
+    reset();
+  });
+
+//TIE BUTTONS
+  $('#tiebutton0').on('click', (e) => {
+    $(tieModal).detach();
+    time = 60;
+    reset();
+  });
+
+  $('#tiebutton1').on('click', (e) => {
+    $(tieModal).detach();
+  });
+
+//PLAYER 1 WINS BUTTONS
+  $('#p1wbutton0').on('click', (e) => {
+    $(p1wModal).detach();
+    time = 60;
+    reset();
+  });
+
+  $('#p1wbutton1').on('click', (e) => {
+    $(p1wModal).detach();
+  });
+
+//PLAYER 2 WINS BUTTONS
+  $('#p2wbutton0').on('click', (e) => {
+    $(p2wModal).detach();
+    time = 60;
+    reset();
+  });
+
+  $('#p2wbutton1').on('click', (e) => {
+    $(p2wModal).detach();
+  });
 }
+//------------------------------  DRAWS IT ALL OUT  --------------------------
 
 animate();
-
-//---------------------------  MAKE SPRITE MOVE  ---------------------------
-
-const moveSprite = (e) => {
-  if (e.keyCode == 39) { //R
-    sprite.xPosition += 50;
-    console.log(sprite);
-  }
-  if (e.keyCode == 37) { //L
-    sprite.xPosition -= 10;
-    console.log(sprite);
-  }
-  if (e.keyCode == 38) { //UP
-    sprite.yPosition -= 50;
-    console.log(sprite);
-  }
-  if (e.keyCode == 40) { //DOWN
-    sprite.yPosition += 10;
-    console.log(sprite);
-  }
-}
-document.onkeydown = moveSprite; //do not put () here.
-//MOVE SPRITE FUNCTION IS OVER
-
-
-//--------------------------  MODALS FOR END OF GAME  --------------------------
-
-
-
-
-// const createHTML = (id, innerText, buttonTexts) => {
-//
-//   //MODAL
-//   let endOfGameModals = document.createElement('div');
-//   endOfGameModals.className = 'modal';
-//   endOfGameModals.id = id;
-//
-//   //SPAN TEXT
-//   let mySpan = document.createElement('span');
-//   mySpan.innerText = innerText;
-//   mySpan.className = 'modalSpan';
-//   endOfGameModals.append(mySpan);
-//
-//   //BUTTONS
-//   for (i = 0; i < buttonTexts.length; i++){
-//   let myButton = document.createElement('button');
-//   myButton.innerText = buttonTexts[i];
-//   myButton.id = id + 'button'+i;
-//   myButton.className = 'modalButton';
-//   endOfGameModals.append(myButton);
-// }
-//   return endOfGameModals;
-// }
-
-
-// createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
-
-// document.body.append(myHTML);
-
-
-let player1Wins = createHTML('player1Wins', 'Player 1 Wins', ['Play Again?', 'NAH']);
-// document.body.append(myHTML);
-
-
-// let new Modal = endOfGameModals {
-//   document.body.append(createHTML);
-// }
-
-
-//need to call it. in your if / else statement.
-
-//take classes and style them.
-
-
-//MODALS FOR TIE, PLAYER 1 WIN, OR PLAYER 2 WIN.
-
-// if (player1Score == player2Score) {
-// swal('No one wins', "What is this, soccer? PLAY AGAIN!!", "images/red-card.png");
-// }
-// } if (player1Score > player2Score) {
-// swal('Player 1 wins', "You survived MoPac and its many enemies!", "images/moustache.png");
-//
-// } else {
-// swal('Player 2 wins', "You survived MoPac and its many enemies!", "images/yogaMat.png");
-// }

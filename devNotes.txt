@@ -1,3 +1,57 @@
+
+
+mopac dodger . surge. sh
+
+
+
+
+---------------------------------  MY NOTES   ----------------------------------
+
+
+TO MOVE SPRITE:
+document.onkeydown = moveSprite; //do not put () here.
+
+FORMULA TO DRAW THE VEHICLES:
+formula: what image, x-starting pt., y-starting pt., width, height. note: you have to have an image variable, not the image source, even if it's relative. save the source to a variable in another file or in the one you're in.
+
+
+TO SHOW % ON TIMER:
+const progressBarTimer = () => {
+  const bar = document.getElementById('progressBar');
+  const status = document.getElementById('status');
+  // status.innerHTML = timerProgress + '%'; if you wanted to show %
+  bar.value = timerProgress;
+  timerProgress--;
+}
+
+
+----------------------  ICONS TO BE USED IN THE FUTURE   -----------------------
+
+road sign:
+<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+B
+
+
+
+red card for modal.
+<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+yoga Mat for sprite 2
+<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+
+guitar for sprite 1
+<div>Icons made by <a href="https://www.flaticon.com/authors/popcorns-arts" title="Icon Pond">Icon Pond</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+
+mustache maybe?
+<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+
+
+
+-----------------------------  RESEARCH INFORMATION  ---------------------------
+
 LINKS:
 
 COLLISION DETECTION:  https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
@@ -5,6 +59,10 @@ COLLISION DETECTION:  https://developer.mozilla.org/en-US/docs/Games/Techniques/
 
 WIDTH BAR TO SHOW TIMER PROGRESS:
 https://www.youtube.com/watch?v=gUJiTBIXcMI
+
+
+MODAL:
+https://css-tricks.com/considerations-styling-modal/
 
 
 FOOTBALL GAME

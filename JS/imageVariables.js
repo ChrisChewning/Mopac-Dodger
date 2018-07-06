@@ -37,5 +37,5 @@ const formula1Image = new Image();
 formula1Image.src = 'images/formula1.png'
 const truckImage = new Image();
 truckImage.src = 'images/truck.png'
-const trucktruckImage = new Image();
-trucktruckImage.src = 'images/trucktruck.png'
+const deliveryTruckImage = new Image();
+deliveryTruckImage.src = 'images/deliveryTruck.png'
