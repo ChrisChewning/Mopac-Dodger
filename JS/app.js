@@ -9,7 +9,7 @@ const c = canvas.getContext('2d');
 let player1Score = '';
 let player2Score = '';
 let time = 60;
-let timerProgress = 100;
+let timerProgress = 60;
 $('#progressBar').hide();
 
 // ---------------------------- PLAYER OPTIONS ---------------------------------
@@ -44,7 +44,7 @@ const progressBarTimer = () => {
   timerProgress--;
 }
 
-    //--------------------------------  TIMER  ---------------------------------
+//--------------------------------  TIMER  ---------------------------------
 
 const setTimer = () => {
   const timer = setInterval(() => {
@@ -71,7 +71,7 @@ const setTimer = () => {
     }
 
     //player 2, 2nd go 'round.
-    if ((time === -5) && (player1IsAlive == false) && (player2IsAlive == true)) {
+    if ((time === 0) && (player1IsAlive == false) && (player2IsAlive == true)) {
       reset();
       clearInterval(timer);
       player1IsAlive == false;
@@ -81,7 +81,7 @@ const setTimer = () => {
 }
 
 
-//------------------------  END OF GAME MODALS  -----------------------------
+//----------------------  CREATE END OF GAME MODALS  ---------------------------
 
 const createHTML = (id, innerText, buttonTexts) => {
 
@@ -121,6 +121,26 @@ let p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many e
 
 
 
+
+//---------------------------  MODAL BUTTONS ON CLICKS  ----------------------
+
+
+//PLAYER 1 PLAY AGAIN BUTTON
+$('#p1button0').on('click', (e) => {
+  $(p1Modal).detach();
+  time = 60;
+  reset();
+});
+
+//PLAYER 2'S TURN BUTTON
+$('#p2tbutton0').on('click', (e) => {
+  $(p2tModal).detach();
+  time = 60;
+  reset();
+});
+
+
+
 // ------------------------------- CLASSES -------------------------------------
 
 class Sprite {
@@ -129,7 +149,7 @@ class Sprite {
     this.speed = speed;
     this.speedType = speedType;
     this.direction = direction;
-    this.startingpXPosition = xPosition; 
+    this.startingpXPosition = xPosition;
     this.xPosition = xPosition;
     this.yPosition = yPosition;
     this.width = width;
@@ -147,7 +167,7 @@ class Vehicle extends Sprite {
 
   //this constructor allows you to pass more parameters.
   constructor(image, speed, speedType, direction, xPosition, yPosition, width, height) {
-  //those that apply to sprite you'd call super for.
+    //those that apply to sprite you'd call super for.
     super(image, speed, speedType, direction, xPosition, yPosition, width, height)
   }
 
@@ -254,7 +274,7 @@ const animate = () => {
 
   for (let i = 0; i < vehicles.length; i++) {
     c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
-    detectCollision(sprite, vehicles[i]);
+    // detectCollision(sprite, vehicles[i]);
   }
 
 
@@ -325,52 +345,52 @@ const animate = () => {
   //PLAYER 1 ONLY
   if (time === 0 && player1IsAlive == true && player2IsAlive == false) {
     $('body').append(p1Modal);
-    clearInterval();
+    // clearInterval();
+    //P1 Play again? (only has one button)
+
   }
 
   //PLAYER 2 TURN
   if (time === 0 && player1IsAlive == true && player2IsAlive == true) {
     $('body').append(p2tModal);
-    clearInterval();
+    // clearInterval();
   }
 
-//TIE
+  //TIE
   if (time === 0 && player1IsAlive == false && player1Score == player2Score) {
     $('body').append(tieModal);
-    clearInterval();
+    // clearInterval();
   }
 
-//PLAYER 1 WIN
+  //PLAYER 1 WIN
   if (time === 0 && player1IsAlive == false && player1Score > player2Score) {
     $('body').append(p1wModal);
-    clearInterval();
+    // clearInterval();
   }
 
-//PLAYER 2 WIN
+  //PLAYER 2 WIN
   if (time === 0 && player1IsAlive == false && player2Score > player1Score) {
     $('body').append(p2wModal);
-    clearInterval();
+    // clearInterval();
   }
 
 
-  //---------------------------  MODAL BUTTONS ON CLICKS  ----------------------
+  //--------  THESE DON'T WORK  ---------
 
-
-//PLAYER 1 PLAY AGAIN BUTTON
-$('#p1button0').on('click', (e) => {
-  $(p1Modal).detach();;
-  time = 60;
-  reset();
-});
-
-//PLAYER 2'S TURN BUTTON
-  $('#p2tbutton0').on('click', (e) => {
-    $(p2tModal).detach();;
+  $('#p1button0').on('click', (e) => {
+    $(p1Modal).detach();
     time = 60;
     reset();
   });
 
-//TIE BUTTONS
+  //P2 TURN (only has one button)
+  $('#p2tbutton0').on('click', (e) => {
+    $(p2tModal).detach();
+    time = 60;
+    reset();
+  });
+
+  //TIE BUTTONS
   $('#tiebutton0').on('click', (e) => {
     $(tieModal).detach();
     time = 60;
@@ -381,9 +401,10 @@ $('#p1button0').on('click', (e) => {
     $(tieModal).detach();
   });
 
-//PLAYER 1 WINS BUTTONS
+  //PLAYER 1 WINS BUTTONS
   $('#p1wbutton0').on('click', (e) => {
     $(p1wModal).detach();
+    console.log(YO);
     time = 60;
     reset();
   });
@@ -392,7 +413,7 @@ $('#p1button0').on('click', (e) => {
     $(p1wModal).detach();
   });
 
-//PLAYER 2 WINS BUTTONS
+  //PLAYER 2 WINS BUTTONS
   $('#p2wbutton0').on('click', (e) => {
     $(p2wModal).detach();
     time = 60;
@@ -402,6 +423,8 @@ $('#p1button0').on('click', (e) => {
   $('#p2wbutton1').on('click', (e) => {
     $(p2wModal).detach();
   });
+
+
 }
 //------------------------------  DRAWS IT ALL OUT  --------------------------
 

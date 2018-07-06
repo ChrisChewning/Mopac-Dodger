@@ -10,6 +10,11 @@ formula: what image, x-starting pt., y-starting pt., width, height. note: you ha
 
 
 TO SHOW % ON TIMER:
+
+html
+<span id='status'></span> 
+
+javascript
 const progressBarTimer = () => {
   const bar = document.getElementById('progressBar');
   const status = document.getElementById('status');
