@@ -6,6 +6,10 @@ const c = canvas.getContext('2d');
 
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
+//empty variables
+let player1IsAlive;
+let player2IsAlive;
+
 let player1Score = '';
 let player2Score = '';
 let time = 3; //3 is for testing. will put it back at 60 when it's ready to go live.
@@ -17,6 +21,7 @@ $('#progressBar').hide();
 $('#onePlayerBtn').on('click', (e) => {
   player1IsAlive = true;
   player2IsAlive = false;
+  animate();
   $('#player1Score').text('Your Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
@@ -27,6 +32,7 @@ $('#onePlayerBtn').on('click', (e) => {
 $('#twoPlayerBtn').on('click', (e) => {
   player1IsAlive = true;
   player2IsAlive = true;
+  animate();
   $('#player1Score').text('Player 1 Score: ');
   $('#player2Score').text('Player 2 Score: ');
   $('#onStartModal').hide();
@@ -54,11 +60,18 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
 
   //BUTTONS
   for (i = 0; i < buttonTexts.length; i++) {
+    console.log('inside the loop');
     const myButton = document.createElement('button');
     myButton.innerText = buttonTexts[i];
     myButton.id = id + 'button' + i;
     myButton.className = 'modalButton';
     endOfGameModals.append(myButton);
+    console.log(myButton, 'please load buttonsss!');
+
+    if (animationFun) {
+      console.log('hi');
+      $(myButton).on('click', animationFun);
+    }
   }
 
 
@@ -66,30 +79,40 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
   // otherwise it will error out
 
   //so this is saying if you have func as party of your modal, when you click the button, it'll return endOfGameModals
-  if (animationFun) {
-    myButton.on('click', animationFun);
-  }
-  return endOfGameModals;
+
+  $('body').append(endOfGameModals);
 }
 
+
+
+
+
+const playAgain = (e) => {
+  console.log(e.currentTarget);
+  $(e.currentTarget).parent().detach();
+}
+
+//if you have two buttons. e.currentTarget gives you the button. if you can read the text inside the button, you can use that to select a certain button. if else statement. if (e.currentTarget is the whole button.)
 
 //--------------------------  CREATES MODALS  ---------------------------
 
 //now we give each modal 'func' so that it will return endOfGameModals on the click, which has built into it the buttons that can detach the modal.
 
-const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], animationFun);
 
-const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START'], animationFun);
 
-const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH'], animationFun);
-
-const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH'], animationFun);
-
-const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH'], animationFun);
+// const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START']);
+//
+// const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
+//
+// const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH']);
+//
+// const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH']);
 
 
 
 //-----------------------  MODALS ON-CLICK FUNCTIONS  ---------------------
+
+
 
 //P1 TURN (only has one button)
 $('#p1button0').on('click', (e) => {
@@ -327,10 +350,9 @@ const detectCollision = () => {
         c.drawImage(backgroundImage, 0, 110, 1600, 400);
         c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
+//Q 1: Is requestAnimationFrame from a library?  https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 
-//QUESTION 1: Is requestAnimationFrame from a library?  https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-
-//QUESTION 2: Is
+//Q 2: Is
 // const id=requestAnimationFrame(cache.mechanism.snowFall);
 
 // console.log(id);
@@ -417,14 +439,22 @@ const detectCollision = () => {
         if (time === 0) {
           console.log('time is 0');
           clearInterval();
-          const modalToAppend = endOfGameCheck();
-          $('body').append(modalToAppend);
-          cancelAnimationFrame(animationFun); //cancel animationFun here
+          endOfGameCheck(animationFun); //stops the animation.
+          // cancelAnimationFrame(animationFun); //cancels the request animation function from line 325.
         };
 
-        const endOfGameCheck = () => {
+console.log(time);
+}
+
+        //--------------------------  DRAWS IT ALL OUT  ------------------------
+
+
+
+        const endOfGameCheck = (animationFun) => {
           if (player1IsAlive && !player2IsAlive) {
-            return p1Modal; //$('body').append(p1Modal); btn: Play Again?
+            cancelAnimationFrame(animationFun);
+            const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], playAgain);
+            console.log('this is a string');
           }
           if (player1IsAlive && player2IsAlive) {
             return p2tModal; //btn: Player 2 Turn
@@ -439,9 +469,3 @@ const detectCollision = () => {
             return p2wModal;
           }
         }
-
-}
-
-        //--------------------------  DRAWS IT ALL OUT  ------------------------
-
-        animate();
