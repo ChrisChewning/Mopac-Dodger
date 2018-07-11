@@ -1,5 +1,5 @@
 *******************************************************************************
-* PROJECT * 								
+#PROJECT  								
 
 This is my 1st full project for General Assembly's Web Development Immersive. It is an Austin, Texas twist on Frogger, where the road is our continually under-construction MoPac. Icons used were ones Austinites would hopefully find intrigue in - a taco truck, a Formula 1 racecar, a segway.
 
@@ -10,12 +10,12 @@ This project stretched me in many ways but there is more to go. Next steps are t
 Technologies used: HTML5, Canvas, CSS, & jQuery.
 
 *******************************************************************************
-* STORY * 																		  
+#STORY																		  
 An unstoppable behemoth named 'Californians' are plugging up Austin's MoPac Highway. It is up to you, or you and your non-Californian friend, to prove you can still cross MoPac without colliding into the endless amount of vehicles.
 
 ********************************************************************************
 
-* USER *
+#USER
 User will be able to:
 
 1. Choose between one player version or two players.
@@ -28,12 +28,12 @@ User will be able to:
 6. If two player game, users will be able to take turns, with player 1 going first. After both players have taken a turn, users will be able to see who won, which will coincide with the scoreboard.
 
 ********************************************************************************
-* WIREFRAME *
+#WIREFRAME
 Wireframe is here: https://wireframe.cc/DKUapP
 
 ********************************************************************************
 
-* ICON ATTRIBUTION *
+#ICON ATTRIBUTION
 
 // All icons are licensed under Creative Commons (http://creativecommons.org/licenses/by/3.0/) and taken from FlatIcon (https://www.flaticon.com). Additional attributes are as following:
 

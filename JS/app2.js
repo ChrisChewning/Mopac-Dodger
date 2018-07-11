@@ -6,11 +6,9 @@ const c = canvas.getContext('2d');
 
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
-var testBoolean = false;
-
 let player1Score = '';
 let player2Score = '';
-let time = 3;
+let time = 60;
 let timerProgress = 60;
 $('#progressBar').hide();
 
@@ -39,9 +37,8 @@ $('#twoPlayerBtn').on('click', (e) => {
 
 //----------------------  CREATE END OF GAME MODALS  -------------------------
 
-const createHTML = (id, innerText, buttonTexts) => {
-
-  //MODAL
+const createHTML = (id, innerText, buttonTexts, thefunctionyouwanttorun) => {
+  /// ============================
   const endOfGameModals = document.createElement('div');
   endOfGameModals.className = 'modal';
   endOfGameModals.id = id;
@@ -59,35 +56,62 @@ const createHTML = (id, innerText, buttonTexts) => {
     myButton.id = id + 'button' + i;
     myButton.className = 'modalButton';
     endOfGameModals.append(myButton);
+
+    // ====================================================================
+    // ====================================================================
+    // ========================================== ==========================
+    // Could do the following to add an event listener to the buttons
+    // By adding an extra parameter to the function defintion you can pass
+    // in a function to do whatever you want for the even tlister
+    if(thefunctionyouwanttorun){
+
+      // we have to check if a function exists when being passed to it
+      // otherwise it will error out
+       // myButton.on('click', thefunctionyouwanttorun);
+    }
+
+
+
+    // ====================================================================
+
+    // ====================================================================
+    // ====================================================================
+
   }
-
-
-//   if(func){
-//     // we have to check if a function exists when being passed to it
-//     // otherwise it will error out
-//      myButton.on('click', func);
-//   }
-//
-//   return endOfGameModals;
-// }
+  return endOfGameModals;
+}
 
 
 //CREATES MODALS
 
-const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again']);
+//// ========
+    // ====================================================================
+    // These should all be const variable, and this is where you can add the function you want for the event
+    // listenr at the end of plModal
+    // ====================================================================
 
-const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START']);
+const func = () => {
 
-const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
+};
+const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], func);
 
-const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH']);
+const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START'], func);
 
-const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH']);
+const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH'], func);
+
+const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH'], func);
+
+const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH'], func);
+
+
+
+
+
 
   //--------  THESE DON'T WORK  ---------
 
   $('#p1button0').on('click', (e) => {
-    $('#p1').detach();
+    // $('#p1').detach();
     time = 60;
     reset();
   });
@@ -96,7 +120,7 @@ const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many
 
   //P2 TURN (only has one button)
   $('#p2tbutton0').on('click', (e) => {
-    $('#p2t').detach();
+    // $('#p2t').detach();
     time = 60;
     reset();
   });
@@ -115,7 +139,7 @@ const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many
   //PLAYER 1 WINS BUTTONS
   $('#p1wbutton0').on('click', (e) => {
     $('#p1w').detach();
-    // console.log(YO);
+    console.log(YO);
     time = 60;
     reset();
   });
@@ -161,6 +185,7 @@ const setTimer = () => {
 
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
       reset();
+      console.log('this happening, insd')
       clearInterval(timer);
     }
 
@@ -328,7 +353,17 @@ const detectCollision = () => {
 
 const animate = () => {
   c.clearRect(0, 0, 1600, 650);
-  requestAnimationFrame(animate);
+
+
+
+  /// We want to save the result from requestAnimationFrame for below in order to cancel it
+
+
+//Is requestAnimationFrame from a library?
+// https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+
+  const animationFun = requestAnimationFrame(animate);
+
   c.drawImage(backgroundImage, 0, 110, 1600, 400);
   c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
@@ -336,6 +371,14 @@ const animate = () => {
 
 
 
+//Is this how you cancel it out? Like catching the frame when the timer hits zero. Are you trying to cancel the animation so the button can detach?
+
+//Like catch the animation frame and cancel it out through the function.
+
+
+  // const id=requestAnimationFrame(cache.mechanism.snowFall);
+
+// console.log(id);
 
 
   //---------------------------  DRAW THE VEHICLES  ----------------------------
@@ -410,76 +453,68 @@ const animate = () => {
 
   //---------------------------  END OF GAME CHECKS ----------------------------
 
-//if time === 0; reset timer()
-//1player1IsAlive
-//player2IsAlive
-//append the modal.
 
-//then you want to append different const variables.
+  ///// ============================
+  /// ============================
 
-// if time is 0, check the time, cler the timer, create a 
+  // You should make the end game check a function beecause you want to check it
+  // in the timer instead of just
 
-if (time === 0) {
-  console.log('time is 0');
-  clearInterval();
-  const modalToAppend = endOfGameCheck();
-  $('body').append(modalToAppend);
-};
-
-const endOfGameCheck = () => {
-  if (player1IsAlive && !player2IsAlive) {
-    return p1Modal;
-  }
-  if (player1IsAlive && player2IsAlive) {
-    return p2tModal;
-  }
-  if (!player1IsAlive && player1Score == player2Score) {
-    return tieModal;
-  }
-  if (!player1IsAlive && player1Score > player2Score) {
-    return p1wModal;
-  }
-  if (!player1IsAlive && player2Score > player1Score) {
-    return p2wModal;
-  }
-}
+  /// ============================
+  /// ============================
 
   //PLAYER 1 ONLY
-//   if (time === 0 && player1IsAlive == true && player2IsAlive == false && testBoolean == false) {
-//     // testBoolean == true;
-// // clearInterval();
-//     $('body').append(p1Modal);
-//
-//     //P1 Play again? (only has one button)
-//
-//   }
-//
-//   //PLAYER 2 TURN
-//   if (time === 0 && player1IsAlive == true && player2IsAlive == true) {
-// // clearInterval();
-//     $('body').append(p2tModal);
-//
-//   }
-//
-//   //TIE
-//   if (time === 0 && player1IsAlive == false && player1Score == player2Score) {
-//     $('body').append(tieModal);
-//     // clearInterval();
-//   }
-//
-//   //PLAYER 1 WIN
-//   if (time === 0 && player1IsAlive == false && player1Score > player2Score) {
-//     $('body').append(p1wModal);
-//     // clearInterval();
-//   }
-//
-//   //PLAYER 2 WIN
-//   if (time === 0 && player1IsAlive == false && player2Score > player1Score) {
-//     $('body').append(p2wModal);
-//     // clearInterval();
-//   }
+  if (time === 0 && player1IsAlive == true && player2IsAlive == false) {
 
-// }
+    //animationFun##############################################################
+    //animationFun##############################################################
+    //animationFun##############################################################
+    //animationFun##############################################################
+
+    // We need to pass the result of requestAnimationFrame
+    // to cancelAnimationFrame in order to stop it
+    // Also You can make all these checks function for end, it would make your code cleaner
+    cancelAnimationFrame(animationFun);
+
+
+//animationFun##############################################################
+//animationFun##############################################################
+    console.log(p1Modal, ' this is p1Modal')
+    console.log('this being called')
+    $('body').append(p1Modal);
+
+    //P1 Play again? (only has one button)
+
+  }
+
+
+
+  //PLAYER 2 TURN
+  if (time === 0 && player1IsAlive == true && player2IsAlive == true) {
+clearInterval();
+    $('body').append(p2tModal);
+
+  }
+
+  //TIE
+  if (time === 0 && player1IsAlive == false && player1Score == player2Score) {
+    $('body').append(tieModal);
+    clearInterval();
+  }
+
+  //PLAYER 1 WIN
+  if (time === 0 && player1IsAlive == false && player1Score > player2Score) {
+    $('body').append(p1wModal);
+    clearInterval();
+  }
+
+  //PLAYER 2 WIN
+  if (time === 0 && player1IsAlive == false && player2Score > player1Score) {
+    $('body').append(p2wModal);
+    clearInterval();
+  }
+
+}
 //------------------------------  DRAWS IT ALL OUT  --------------------------
 
 animate();
