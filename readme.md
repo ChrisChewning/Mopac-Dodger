@@ -10,12 +10,12 @@ This project stretched me in many ways but there is more to go. Next steps are t
 Technologies used: HTML5, Canvas, CSS, & jQuery.
 
 *******************************************************************************
-# STORY																		  
+# GAME STORY																		  
 An unstoppable behemoth named 'Californians' are plugging up Austin's MoPac Highway. It is up to you, or you and your non-Californian friend, to prove you can still cross MoPac without colliding into the endless amount of vehicles.
 
 ********************************************************************************
 
-# USER
+# USER STORIES
 User will be able to:
 
 1. Choose between one player version or two players.
@@ -33,7 +33,7 @@ Wireframe is here: https://wireframe.cc/DKUapP
 
 ********************************************************************************
 
-#### ICON ATTRIBUTION
+### ICON ATTRIBUTION
 
 // All icons are licensed under Creative Commons (http://creativecommons.org/licenses/by/3.0/) and taken from FlatIcon (https://www.flaticon.com). Additional attributes are as following:
 

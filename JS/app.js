@@ -6,11 +6,9 @@ const c = canvas.getContext('2d');
 
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
-var testBoolean = false;
-
 let player1Score = '';
 let player2Score = '';
-let time = 3;
+let time = 3; //3 is for testing. will put it back at 60 when it's ready to go live.
 let timerProgress = 60;
 $('#progressBar').hide();
 
@@ -39,7 +37,9 @@ $('#twoPlayerBtn').on('click', (e) => {
 
 //----------------------  CREATE END OF GAME MODALS  -------------------------
 
-const createHTML = (id, innerText, buttonTexts) => {
+// animationFun not func
+
+const createHTML = (id, innerText, buttonTexts, animationFun) => {
 
   //MODAL
   const endOfGameModals = document.createElement('div');
@@ -62,80 +62,84 @@ const createHTML = (id, innerText, buttonTexts) => {
   }
 
 
-//   if(func){
-//     // we have to check if a function exists when being passed to it
-//     // otherwise it will error out
-//      myButton.on('click', func);
-//   }
-//
-//   return endOfGameModals;
-// }
+  // we have to check if a function exists when being passed to it
+  // otherwise it will error out
+
+  //so this is saying if you have func as party of your modal, when you click the button, it'll return endOfGameModals
+  if (animationFun) {
+    myButton.on('click', animationFun);
+  }
+  return endOfGameModals;
+}
 
 
-//CREATES MODALS
+//--------------------------  CREATES MODALS  ---------------------------
 
-const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again']);
+//now we give each modal 'func' so that it will return endOfGameModals on the click, which has built into it the buttons that can detach the modal.
 
-const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START']);
+const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], animationFun);
 
-const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
+const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START'], animationFun);
 
-const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH']);
+const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH'], animationFun);
 
-const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH']);
+const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH'], animationFun);
 
-  //--------  THESE DON'T WORK  ---------
-
-  $('#p1button0').on('click', (e) => {
-    $('#p1').detach();
-    time = 60;
-    reset();
-  });
-
-  console.log($('#p1button0'));
-
-  //P2 TURN (only has one button)
-  $('#p2tbutton0').on('click', (e) => {
-    $('#p2t').detach();
-    time = 60;
-    reset();
-  });
-
-  //TIE BUTTONS
-  $('#tiebutton0').on('click', (e) => {
-    $('#tie').detach();
-    time = 60;
-    reset();
-  });
-
-  $('#tiebutton1').on('click', (e) => {
-    $('#tie').detach();
-  });
-
-  //PLAYER 1 WINS BUTTONS
-  $('#p1wbutton0').on('click', (e) => {
-    $('#p1w').detach();
-    // console.log(YO);
-    time = 60;
-    reset();
-  });
-
-  $('#p1wbutton1').on('click', (e) => {
-    $('#p1w').detach();
-  });
-
-  //PLAYER 2 WINS BUTTONS
-  $('#p2wbutton0').on('click', (e) => {
-    $('#p2w').detach();
-    time = 60;
-    reset();
-  });
-
-  $('#p2wbutton1').on('click', (e) => {
-    $('#p2w').detach();
-  });
+const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH'], animationFun);
 
 
+
+//-----------------------  MODALS ON-CLICK FUNCTIONS  ---------------------
+
+//P1 TURN (only has one button)
+$('#p1button0').on('click', (e) => {
+  $('#p1').detach();
+  time = 60;
+  reset();
+});
+
+console.log($('#p1button0'));
+
+//P2 TURN (only has one button)
+$('#p2tbutton0').on('click', (e) => {
+  $('#p2t').detach();
+  time = 60;
+  reset();
+});
+
+//TIE BUTTONS
+$('#tiebutton0').on('click', (e) => {
+  $('#tie').detach();
+  time = 60;
+  reset();
+});
+
+$('#tiebutton1').on('click', (e) => {
+  $('#tie').detach();
+});
+
+//PLAYER 1 WINS BUTTONS
+$('#p1wbutton0').on('click', (e) => {
+  $('#p1w').detach();
+  // console.log(YO);
+  time = 60;
+  reset();
+});
+
+$('#p1wbutton1').on('click', (e) => {
+  $('#p1w').detach();
+});
+
+//PLAYER 2 WINS BUTTONS
+$('#p2wbutton0').on('click', (e) => {
+  $('#p2w').detach();
+  time = 60;
+  reset();
+});
+
+$('#p2wbutton1').on('click', (e) => {
+  $('#p2w').detach();
+});
 
 
 
@@ -183,25 +187,6 @@ const setTimer = () => {
     }
   }, 1000);
 }
-
-
-//---------------------------  MODAL BUTTONS ON CLICKS  ----------------------
-
-
-// //PLAYER 1 PLAY AGAIN BUTTON
-// $('#p1button0').on('click', (e) => {
-//   $(p1Modal).detach();
-//   time = 60;
-//   reset();
-// });
-//
-// //PLAYER 2'S TURN BUTTON
-// $('#p2tbutton0').on('click', (e) => {
-//   $(p2tModal).detach();
-//   time = 60;
-//   reset();
-// });
-
 
 
 // ------------------------------- CLASSES -------------------------------------
@@ -323,163 +308,140 @@ const detectCollision = () => {
   }
 }
 
+
 //------------------------  BEGIN ANIMATION FUNCTION  --------------------------
 
-
-const animate = () => {
-  c.clearRect(0, 0, 1600, 650);
-  requestAnimationFrame(animate);
-  c.drawImage(backgroundImage, 0, 110, 1600, 400);
-  c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
+// const animationFun = requestAnimationFrame(animate);
+//
+// const animate = () => {
+//     c.clearRect(0, 0, 1600, 650);
 
 
 
 
+    //----------------------  BEGIN ANIMATION FUNCTION  ------------------------
+    const animate = () => {
+        c.clearRect(0, 0, 1600, 650);
+        const animationFun = requestAnimationFrame(animate); //added a variable animationFun so we can save the result from requestAnimationFrame to have the option to stop it.
+        //my original way was:   requestAnimationFrame(animate);
+        c.drawImage(backgroundImage, 0, 110, 1600, 400);
+        c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
+
+
+//QUESTION 1: Is requestAnimationFrame from a library?  https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+
+//QUESTION 2: Is
+// const id=requestAnimationFrame(cache.mechanism.snowFall);
+
+// console.log(id);
+
+// this how you cancel it out? Like catching the frame when the timer hits zero. Are you trying to cancel the animation so the button can detach?
 
 
 
-  //---------------------------  DRAW THE VEHICLES  ----------------------------
 
-  for (let i = 0; i < vehicles.length; i++) {
-    c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
-    detectCollision(sprite, vehicles[i]);
-  }
+        //------------------------  DRAW THE VEHICLES  -------------------------
 
-
-  //------------------------  MAKE THE VEHICLES MOVE  --------------------------
-
-  for (let car of vehicles) {
-    car.moveVehicle();
-    if (!car.isOnScreen()) {
-      car.resetVehicle();
-    }
-  }
-
-  //-------------------------  SPRITE'S BOUNDARIES  ----------------------------
-
-  if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
-    reset();
-  }
-
-  //-----------------------  ADD POINTS: ONE PLAYER GAME  ----------------------
-
-  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
-    player1Score++;
-    reset();
-    $('#player1Score').text('Your Score: ' + player1Score);
-  }
+        for (let i = 0; i < vehicles.length; i++) {
+          c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
+          detectCollision(sprite, vehicles[i]);
+        }
 
 
-  //-----------------------  ADD POINTS: TWO PLAYER GAME  ----------------------
+        //----------------------  MAKE THE VEHICLES MOVE  ----------------------
 
-  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == true) {
-    player1Score++;
-    reset();
-    $('#player1Score').text('Player 1 Score: ' + player1Score);
-  }
+        for (let car of vehicles) {
+          car.moveVehicle();
+          if (!car.isOnScreen()) {
+            car.resetVehicle();
+          }
+        }
 
-  if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
-    player2Score++;
-    reset();
-    $('#player2Score').text('Player 2 Score: ' + player2Score);
-  }
+        //-----------------------  SPRITE'S BOUNDARIES  ------------------------
 
+        if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
+          reset();
+        }
 
-  //---------------------------  MAKE SPRITE MOVE  ---------------------------
+        //---------------------  ADD POINTS: ONE PLAYER GAME  ------------------
 
-  const moveSprite = (e) => {
-    if (e.keyCode == 39) { //R
-      sprite.xPosition += 50;
-      // console.log(sprite);
-    }
-    if (e.keyCode == 37) { //L
-      sprite.xPosition -= 10;
-      // console.log(sprite);
-    }
-    if (e.keyCode == 38) { //UP
-      sprite.yPosition -= 50;
-      // console.log(sprite);
-    }
-    if (e.keyCode == 40) { //DOWN
-      sprite.yPosition += 10;
-      // console.log(sprite);
-    }
-  }
-  document.onkeydown = moveSprite; //do not put () here.
+        if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
+          player1Score++;
+          reset();
+          $('#player1Score').text('Your Score: ' + player1Score);
+        }
 
 
-  //---------------------------  END OF GAME CHECKS ----------------------------
+        //-------------------  ADD POINTS: TWO PLAYER GAME  --------------------
 
-//if time === 0; reset timer()
-//1player1IsAlive
-//player2IsAlive
-//append the modal.
+        if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == true) {
+          player1Score++;
+          reset();
+          $('#player1Score').text('Player 1 Score: ' + player1Score);
+        }
 
-//then you want to append different const variables.
+        if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
+          player2Score++;
+          reset();
+          $('#player2Score').text('Player 2 Score: ' + player2Score);
+        }
 
-// if time is 0, check the time, cler the timer, create a 
 
-if (time === 0) {
-  console.log('time is 0');
-  clearInterval();
-  const modalToAppend = endOfGameCheck();
-  $('body').append(modalToAppend);
-};
+        //-------------------------  MAKE SPRITE MOVE  -------------------------
 
-const endOfGameCheck = () => {
-  if (player1IsAlive && !player2IsAlive) {
-    return p1Modal;
-  }
-  if (player1IsAlive && player2IsAlive) {
-    return p2tModal;
-  }
-  if (!player1IsAlive && player1Score == player2Score) {
-    return tieModal;
-  }
-  if (!player1IsAlive && player1Score > player2Score) {
-    return p1wModal;
-  }
-  if (!player1IsAlive && player2Score > player1Score) {
-    return p2wModal;
-  }
+        const moveSprite = (e) => {
+          if (e.keyCode == 39) { //R
+            sprite.xPosition += 50;
+            // console.log(sprite);
+          }
+          if (e.keyCode == 37) { //L
+            sprite.xPosition -= 10;
+            // console.log(sprite);
+          }
+          if (e.keyCode == 38) { //UP
+            sprite.yPosition -= 50;
+            // console.log(sprite);
+          }
+          if (e.keyCode == 40) { //DOWN
+            sprite.yPosition += 10;
+            // console.log(sprite);
+          }
+        }
+        document.onkeydown = moveSprite; //do not put () here.
+
+
+        //------------------------  END OF GAME CHECKS -------------------------
+
+        //if time === 0; reset timer(), append the modal.
+
+        if (time === 0) {
+          console.log('time is 0');
+          clearInterval();
+          const modalToAppend = endOfGameCheck();
+          $('body').append(modalToAppend);
+          cancelAnimationFrame(animationFun); //cancel animationFun here
+        };
+
+        const endOfGameCheck = () => {
+          if (player1IsAlive && !player2IsAlive) {
+            return p1Modal; //$('body').append(p1Modal); btn: Play Again?
+          }
+          if (player1IsAlive && player2IsAlive) {
+            return p2tModal; //btn: Player 2 Turn
+          }
+          if (!player1IsAlive && player1Score == player2Score) {
+            return tieModal;
+          }
+          if (!player1IsAlive && player1Score > player2Score) {
+            return p1wModal;
+          }
+          if (!player1IsAlive && player2Score > player1Score) {
+            return p2wModal;
+          }
+        }
+
 }
 
-  //PLAYER 1 ONLY
-//   if (time === 0 && player1IsAlive == true && player2IsAlive == false && testBoolean == false) {
-//     // testBoolean == true;
-// // clearInterval();
-//     $('body').append(p1Modal);
-//
-//     //P1 Play again? (only has one button)
-//
-//   }
-//
-//   //PLAYER 2 TURN
-//   if (time === 0 && player1IsAlive == true && player2IsAlive == true) {
-// // clearInterval();
-//     $('body').append(p2tModal);
-//
-//   }
-//
-//   //TIE
-//   if (time === 0 && player1IsAlive == false && player1Score == player2Score) {
-//     $('body').append(tieModal);
-//     // clearInterval();
-//   }
-//
-//   //PLAYER 1 WIN
-//   if (time === 0 && player1IsAlive == false && player1Score > player2Score) {
-//     $('body').append(p1wModal);
-//     // clearInterval();
-//   }
-//
-//   //PLAYER 2 WIN
-//   if (time === 0 && player1IsAlive == false && player2Score > player1Score) {
-//     $('body').append(p2wModal);
-//     // clearInterval();
-//   }
+        //--------------------------  DRAWS IT ALL OUT  ------------------------
 
-// }
-//------------------------------  DRAWS IT ALL OUT  --------------------------
-
-animate();
+        animate();
