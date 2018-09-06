@@ -85,10 +85,14 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
 
 
 
-
-
 const playAgain = (e) => {
   console.log(e.currentTarget);
+  clearInterval();
+  time = 60;
+  let score = 0;
+  setTimer();
+  reset();
+  animate();
   $(e.currentTarget).parent().detach();
 }
 
@@ -111,8 +115,6 @@ const playAgain = (e) => {
 
 
 //-----------------------  MODALS ON-CLICK FUNCTIONS  ---------------------
-
-
 
 //P1 TURN (only has one button)
 $('#p1button0').on('click', (e) => {
@@ -144,7 +146,6 @@ $('#tiebutton1').on('click', (e) => {
 //PLAYER 1 WINS BUTTONS
 $('#p1wbutton0').on('click', (e) => {
   $('#p1w').detach();
-  // console.log(YO);
   time = 60;
   reset();
 });
@@ -454,12 +455,21 @@ console.log(time);
             const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], playAgain);
             console.log('this is a string');
           }
+
+
           if (player1IsAlive && player2IsAlive) {
-            return p2tModal; //btn: Player 2 Turn
+            cancelAnimationFrame(animationFun);
+            const p2tModal = createHTML('p2', 'Players Tied!', ['Play Again', 'Nah'], playAgain);
+            // return p2tModal; //btn: Player 2 Turn
           }
+
+
           if (!player1IsAlive && player1Score == player2Score) {
-            return tieModal;
+            cancelAnimationFrame(animationFun);
+            const tieModal = createHTML('p2', 'Player 2 Turn!', ['Play Now'], playAgain);
           }
+
+
           if (!player1IsAlive && player1Score > player2Score) {
             return p1wModal;
           }
