@@ -3,16 +3,15 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
-
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
 //empty variables
 let player1IsAlive;
 let player2IsAlive;
 
-let player1Score = '';
-let player2Score = '';
-let time = 3; //3 is for testing. will put it back at 60 when it's ready to go live.
+let player1Score = 0;
+let player2Score = 0;
+let time = 5; //test with 3 or 8.
 let timerProgress = 60;
 $('#progressBar').hide();
 
@@ -28,7 +27,6 @@ $('#onePlayerBtn').on('click', (e) => {
   setTimer();
 });
 
-
 $('#twoPlayerBtn').on('click', (e) => {
   player1IsAlive = true;
   player2IsAlive = true;
@@ -39,7 +37,6 @@ $('#twoPlayerBtn').on('click', (e) => {
   $('#progressBar').show();
   setTimer();
 });
-
 
 //----------------------  CREATE END OF GAME MODALS  -------------------------
 
@@ -74,100 +71,44 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
     }
   }
 
-
   // we have to check if a function exists when being passed to it
-  // otherwise it will error out
-
-  //so this is saying if you have func as party of your modal, when you click the button, it'll return endOfGameModals
+  // otherwise it will error out. so this is saying if you have func as party of your modal, when you click the button, it'll return endOfGameModals
 
   $('body').append(endOfGameModals);
 }
 
-
+//----------------------------  MODAL BUTTONS  -----------------------------
 
 const playAgain = (e) => {
   console.log(e.currentTarget);
   clearInterval();
-  time = 60;
-  let score = 0;
+  time = 5;
+  timerProgress = 60;
+  // let score = 0;
   setTimer();
   reset();
   animate();
   $(e.currentTarget).parent().detach();
+  player1IsAlive = true;
+  player1Score = 0;
+  player2Score = 0;
+  $('#player1Score').text('Player 1 Score: ');
+  $('#player2Score').text('Player 2 Score: ');
 }
 
-//if you have two buttons. e.currentTarget gives you the button. if you can read the text inside the button, you can use that to select a certain button. if else statement. if (e.currentTarget is the whole button.)
-
-//--------------------------  CREATES MODALS  ---------------------------
-
-//now we give each modal 'func' so that it will return endOfGameModals on the click, which has built into it the buttons that can detach the modal.
-
-
-
-// const p2tModal = createHTML('p2t', 'Player 2\'s turn!', ['START']);
-//
-// const tieModal = createHTML('tie', 'No one wins - what is this, soccer?!?!', ['Play Again?', 'NAH']);
-//
-// const p1wModal = createHTML('p1w', 'Player 1 Wins! You survived MoPac & its many enemies.', ['Play Again?', 'NAH']);
-//
-// const p2wModal = createHTML('p2w', 'Player 2 Wins! You survived MoPac & its many enemies!', ['Play Again?', 'NAH']);
-
-
-
-//-----------------------  MODALS ON-CLICK FUNCTIONS  ---------------------
-
-//P1 TURN (only has one button)
-$('#p1button0').on('click', (e) => {
-  $('#p1').detach();
-  time = 60;
+const playNow = (e) => {
+  console.log(e.currentTarget);
+  clearInterval();
+  time = 5;
+  timerProgress = 60;
+  setTimer();
   reset();
-});
+  animate();
+  $(e.currentTarget).parent().detach();
+  player1IsAlive = false;
+}
 
-console.log($('#p1button0'));
-
-//P2 TURN (only has one button)
-$('#p2tbutton0').on('click', (e) => {
-  $('#p2t').detach();
-  time = 60;
-  reset();
-});
-
-//TIE BUTTONS
-$('#tiebutton0').on('click', (e) => {
-  $('#tie').detach();
-  time = 60;
-  reset();
-});
-
-$('#tiebutton1').on('click', (e) => {
-  $('#tie').detach();
-});
-
-//PLAYER 1 WINS BUTTONS
-$('#p1wbutton0').on('click', (e) => {
-  $('#p1w').detach();
-  time = 60;
-  reset();
-});
-
-$('#p1wbutton1').on('click', (e) => {
-  $('#p1w').detach();
-});
-
-//PLAYER 2 WINS BUTTONS
-$('#p2wbutton0').on('click', (e) => {
-  $('#p2w').detach();
-  time = 60;
-  reset();
-});
-
-$('#p2wbutton1').on('click', (e) => {
-  $('#p2w').detach();
-});
-
-
-
-//------------------------------  TIMER BAR  -----------------------------------
+//------------------------------  TIMER BAR  ---------------------------------
 
 const progressBarTimer = () => {
   const bar = document.getElementById('progressBar');
@@ -181,9 +122,7 @@ const progressBarTimer = () => {
 const setTimer = () => {
   const timer = setInterval(() => {
     time--;
-    // console.log(time); //check it here, not after closing brackets.
     progressBarTimer();
-
 
     //-------------------------  FOR ONE PLAYER GAME  --------------------------
 
@@ -198,20 +137,16 @@ const setTimer = () => {
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
       reset();
       clearInterval(timer);
-      player1IsAlive = false;
-      // console.log(player1IsAlive);
+      playNow();
     }
 
     //player 2, 2nd go 'round.
     if ((time === 0) && (player1IsAlive == false) && (player2IsAlive == true)) {
       reset();
       clearInterval(timer);
-      player1IsAlive == false;
-      // console.log(player1IsAlive);
     }
   }, 1000);
 }
-
 
 // ------------------------------- CLASSES -------------------------------------
 
@@ -236,16 +171,11 @@ const sprite = new Sprite(spriteImage, 4, 'medium', 'all', 660, 510, 112, 112);
 
 //VEHICLE
 class Vehicle extends Sprite {
-
-  //this constructor allows you to pass more parameters.
   constructor(image, speed, speedType, direction, xPosition, yPosition, width, height) {
     //those that apply to sprite you'd call super for.
     super(image, speed, speedType, direction, xPosition, yPosition, width, height)
   }
 
-  //FUNCTIONS: you don't need parameters b.c your info is in your class.
-
-  //function 1: is a vehicle on screen?
   isOnScreen() {
     if (this.xPosition < 0) {
       return false;
@@ -256,16 +186,12 @@ class Vehicle extends Sprite {
     return true;
   }
 
-
-  //extended a class. So super is calling the constructor for the parent class (Sprite). You are passing the variables you gave
-
-  //function 2: move the vehicles.
   moveVehicle() {
     this.xPosition += this.speed; //this moves all the vehicles.
   }
 
   //function 3: reset the vehicles.
-  //if you are moving to the left, we are setting the starting position all the way to the right. //else start at 0, which is the left side of the screen.
+  //if you are moving to the left, we are setting the starting position all the way to the right. else start at 0, which is the left side of the screen.
   // this.xPosition = this.startingpXPosition;
 
   resetVehicle() {
@@ -275,7 +201,7 @@ class Vehicle extends Sprite {
       this.xPosition = 0;
     }
 
-    //explanation: if (this.startingpXPosition)  {  //if is looking for a boolean. you passed a number into a conditional statement. not 0 so it's true. is the starting position = 0? If not we set the xPosition to the right side of the screen. If it is 0, we set the xPosition to 0.
+    //explanation: if (this.startingpXPosition)  {  if is looking for a boolean. you passed a number into a conditional statement. not 0 so it's true. is the starting position = 0? If not we set the xPosition to the right side of the screen. If it is 0, we set the xPosition to 0.
     //     this.xPosition = canvas.width
     // }
     // else {
@@ -306,9 +232,8 @@ const vehicles = [
   camper = new Vehicle(camperImage, -1, 'medium', 'left', 700, 380, 112, 112),
   crane = new Vehicle(craneImage, -1, 'medium', 'left', 300, 380, 112, 112),
   excavator = new Vehicle(excavatorImage, -1, 'medium', 'left', 500, 380, 112, 112),
-  rv = new Vehicle(rvImage, -1, 'medium', 'left', 100, 380, 112, 112),
+  rv = new Vehicle(rvImage, -1, 'medium', 'left', 100, 380, 112, 112)
 ]
-
 
 //-----------------------------  SPRITE RESET  ---------------------------------
 
@@ -322,158 +247,131 @@ const reset = () => {
 const detectCollision = () => {
 
   for (let i = 0; i < vehicles.length; i++) {
-    if (sprite.xPosition < vehicles[i].xPosition + vehicles[i].width &&
-      sprite.xPosition + sprite.width > vehicles[i].xPosition &&
-      sprite.yPosition < vehicles[i].yPosition + vehicles[i].height &&
-      sprite.yPosition + sprite.height > vehicles[i].yPosition) {
+    if (sprite.xPosition < vehicles[i].xPosition + vehicles[i].width && sprite.xPosition + sprite.width > vehicles[i].xPosition && sprite.yPosition < vehicles[i].yPosition + vehicles[i].height && sprite.yPosition + sprite.height > vehicles[i].yPosition) {
       reset();
       // console.log('oh, hai mark!');
     }
   }
 }
 
+//----------------------  BEGIN ANIMATION FUNCTION  ------------------------
+const animate = () => {
+  c.clearRect(0, 0, 1600, 650);
+  const animationFun = requestAnimationFrame(animate); //added a variable animationFun so we can save the result from requestAnimationFrame to have the option to stop it. originally: requestAnimationFrame(animate);
+  c.drawImage(backgroundImage, 0, 110, 1600, 400);
+  c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
-//------------------------  BEGIN ANIMATION FUNCTION  --------------------------
+  //NOTE: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 
-// const animationFun = requestAnimationFrame(animate);
-//
-// const animate = () => {
-//     c.clearRect(0, 0, 1600, 650);
+  //------------------------  DRAW THE VEHICLES  -------------------------
 
+  for (let i = 0; i < vehicles.length; i++) {
+    c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
+    detectCollision(sprite, vehicles[i]);
+  }
 
+  //----------------------  MAKE THE VEHICLES MOVE  ----------------------
 
+  for (let car of vehicles) {
+    car.moveVehicle();
+    if (!car.isOnScreen()) {
+      car.resetVehicle();
+    }
+  }
 
-    //----------------------  BEGIN ANIMATION FUNCTION  ------------------------
-    const animate = () => {
-        c.clearRect(0, 0, 1600, 650);
-        const animationFun = requestAnimationFrame(animate); //added a variable animationFun so we can save the result from requestAnimationFrame to have the option to stop it.
-        //my original way was:   requestAnimationFrame(animate);
-        c.drawImage(backgroundImage, 0, 110, 1600, 400);
-        c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
+  //-----------------------  SPRITE'S BOUNDARIES  ------------------------
 
-//Q 1: Is requestAnimationFrame from a library?  https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+  if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
+    reset();
+  }
 
-//Q 2: Is
-// const id=requestAnimationFrame(cache.mechanism.snowFall);
+  //---------------------  ADD POINTS: ONE PLAYER GAME  ------------------
 
-// console.log(id);
+  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
+    player1Score++;
+    reset();
+    $('#player1Score').text('Your Score: ' + player1Score);
+  }
 
-// this how you cancel it out? Like catching the frame when the timer hits zero. Are you trying to cancel the animation so the button can detach?
+  //-------------------  ADD POINTS: TWO PLAYER GAME  --------------------
 
+  if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == true) {
+    player1Score++;
+    reset();
+    $('#player1Score').text('Player 1 Score: ' + player1Score);
+  }
 
+  if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
+    player2Score++;
+    reset();
+    $('#player2Score').text('Player 2 Score: ' + player2Score);
+  }
 
+  //-------------------------  MAKE SPRITE MOVE  -------------------------
 
-        //------------------------  DRAW THE VEHICLES  -------------------------
+  const moveSprite = (e) => {
+    if (e.keyCode == 39) { //R
+      sprite.xPosition += 50;
+      // console.log(sprite);
+    }
+    if (e.keyCode == 37) { //L
+      sprite.xPosition -= 10;
+      // console.log(sprite);
+    }
+    if (e.keyCode == 38) { //UP
+      sprite.yPosition -= 50;
+      // console.log(sprite);
+    }
+    if (e.keyCode == 40) { //DOWN
+      sprite.yPosition += 10;
+      // console.log(sprite);
+    }
+  }
+  document.onkeydown = moveSprite; //do not put () here.
 
-        for (let i = 0; i < vehicles.length; i++) {
-          c.drawImage(vehicles[i].image, vehicles[i].xPosition, vehicles[i].yPosition, vehicles[i].width, vehicles[i].height);
-          detectCollision(sprite, vehicles[i]);
-        }
+  //------------------------  END OF GAME CHECKS -------------------------
 
+  if (time === 0) {
+    console.log('time is 0');
+    clearInterval();
+    endOfGameCheck(animationFun); //stops the animation.
+    // cancelAnimationFrame(animationFun); cancels the request animation function from line 325.
+  };
 
-        //----------------------  MAKE THE VEHICLES MOVE  ----------------------
-
-        for (let car of vehicles) {
-          car.moveVehicle();
-          if (!car.isOnScreen()) {
-            car.resetVehicle();
-          }
-        }
-
-        //-----------------------  SPRITE'S BOUNDARIES  ------------------------
-
-        if ((sprite.xPosition <= -5) || (sprite.xPosition >= 1350)) {
-          reset();
-        }
-
-        //---------------------  ADD POINTS: ONE PLAYER GAME  ------------------
-
-        if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == false) {
-          player1Score++;
-          reset();
-          $('#player1Score').text('Your Score: ' + player1Score);
-        }
-
-
-        //-------------------  ADD POINTS: TWO PLAYER GAME  --------------------
-
-        if (sprite.yPosition <= -10 && player1IsAlive == true && player2IsAlive == true) {
-          player1Score++;
-          reset();
-          $('#player1Score').text('Player 1 Score: ' + player1Score);
-        }
-
-        if (sprite.yPosition <= -10 && player1IsAlive == false && player2IsAlive == true) {
-          player2Score++;
-          reset();
-          $('#player2Score').text('Player 2 Score: ' + player2Score);
-        }
-
-
-        //-------------------------  MAKE SPRITE MOVE  -------------------------
-
-        const moveSprite = (e) => {
-          if (e.keyCode == 39) { //R
-            sprite.xPosition += 50;
-            // console.log(sprite);
-          }
-          if (e.keyCode == 37) { //L
-            sprite.xPosition -= 10;
-            // console.log(sprite);
-          }
-          if (e.keyCode == 38) { //UP
-            sprite.yPosition -= 50;
-            // console.log(sprite);
-          }
-          if (e.keyCode == 40) { //DOWN
-            sprite.yPosition += 10;
-            // console.log(sprite);
-          }
-        }
-        document.onkeydown = moveSprite; //do not put () here.
-
-
-        //------------------------  END OF GAME CHECKS -------------------------
-
-        //if time === 0; reset timer(), append the modal.
-
-        if (time === 0) {
-          console.log('time is 0');
-          clearInterval();
-          endOfGameCheck(animationFun); //stops the animation.
-          // cancelAnimationFrame(animationFun); //cancels the request animation function from line 325.
-        };
-
-console.log(time);
 }
 
-        //--------------------------  DRAWS IT ALL OUT  ------------------------
+//--------------------------  DRAWS IT ALL OUT  ------------------------
 
-        const endOfGameCheck = (animationFun) => {
-          if (player1IsAlive && !player2IsAlive) {
-            cancelAnimationFrame(animationFun);
-            const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], playAgain);
-            console.log('this is a string');
-          }
+const endOfGameCheck = (animationFun) => {
 
+  //ONE PLAYER GAME
+  if (player1IsAlive && !player2IsAlive) {
+    cancelAnimationFrame(animationFun);
+    const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], playAgain);
+    console.log('this is a string');
+  }
 
-          if (player1IsAlive && player2IsAlive) {
-            cancelAnimationFrame(animationFun);
-            const p2tModal = createHTML('p2', 'Players Tied!', ['Play Again', 'Nah'], playAgain);
-            // return p2tModal; //btn: Player 2 Turn
-          }
+  //TWO PLAYER GAME: PERSON 2 TURN.
+  if (player1IsAlive && player2IsAlive) {
+    cancelAnimationFrame(animationFun);
+    const tieModal = createHTML('p2', 'Player 2\'s Turn!', ['Play Now'], playNow);
+  }
 
+  //TWO PLAYER GAME: TIE
+  if (!player1IsAlive && player2IsAlive && player1Score == player2Score) {
+    cancelAnimationFrame(animationFun);
+    const p2tModal = createHTML('tiebutton0', 'Players Tied!', ['Play Again'], playAgain);
+  }
 
-          if (!player1IsAlive && player1Score == player2Score) {
-            cancelAnimationFrame(animationFun);
-            const tieModal = createHTML('p2', 'Player 2 Turn!', ['Play Now'], playAgain);
-          }
+  //TWO PLAYER GAME: P1 WINS
+  if (!player1IsAlive && player1Score > player2Score) {
+    cancelAnimationFrame(animationFun);
+    const p1wModal = createHTML('p1w', 'Player 1 Wins! You Survived MoPac & Its Many Enemies!', ['Play Again'], playAgain);
+  }
 
-
-          if (!player1IsAlive && player1Score > player2Score) {
-            return p1wModal;
-          }
-          if (!player1IsAlive && player2Score > player1Score) {
-            return p2wModal;
-          }
-        }
+  //TWO PLAYER GAME: P2 WINS
+  if (!player1IsAlive && player2Score > player1Score) {
+    cancelAnimationFrame(animationFun);
+    const p2wModal = createHTML('p2w', 'Player 2 Wins! You Survived MoPac & Its Many Enemies!', ['Play Again'], playAgain);
+  }
+}
