@@ -448,8 +448,6 @@ console.log(time);
 
         //--------------------------  DRAWS IT ALL OUT  ------------------------
 
-
-
         const endOfGameCheck = (animationFun) => {
           if (player1IsAlive && !player2IsAlive) {
             cancelAnimationFrame(animationFun);
