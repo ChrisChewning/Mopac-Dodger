@@ -11,7 +11,7 @@ let player2IsAlive;
 
 let player1Score = 0;
 let player2Score = 0;
-let time = 5; //test with 3 or 8.
+let time = 60; //test with 3 or 8.
 let timerProgress = 60;
 $('#progressBar').hide();
 
@@ -82,7 +82,7 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
 const playAgain = (e) => {
   console.log(e.currentTarget);
   clearInterval();
-  time = 5;
+  time = 60;
   timerProgress = 60;
   // let score = 0;
   setTimer();
@@ -92,14 +92,22 @@ const playAgain = (e) => {
   player1IsAlive = true;
   player1Score = 0;
   player2Score = 0;
+
+  if (player2IsAlive == false) {
   $('#player1Score').text('Player 1 Score: ');
-  $('#player2Score').text('Player 2 Score: ');
+  }
+  if (player2IsAlive){
+    $('#player1Score').text('Player 1 Score: ');
+    $('#player2Score').text('Player 2 Score: ');
+  }
 }
+
+  
 
 const playNow = (e) => {
   console.log(e.currentTarget);
   clearInterval();
-  time = 5;
+  time = 60;
   timerProgress = 60;
   setTimer();
   reset();
