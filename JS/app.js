@@ -13,7 +13,9 @@ let player1Score = 0;
 let player2Score = 0;
 let time = 60; //test with 3 or 8.
 let timerProgress = 60;
+let timerInterval;
 $('#progressBar').hide();
+$('#timerDisplay').hide();
 
 // ---------------------------- PLAYER OPTIONS ---------------------------------
 
@@ -24,6 +26,7 @@ $('#onePlayerBtn').on('click', (e) => {
   $('#player1Score').text('Your Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
+  $('#timerDisplay').show().text('60');
   setTimer();
 });
 
@@ -35,6 +38,7 @@ $('#twoPlayerBtn').on('click', (e) => {
   $('#player2Score').text('Player 2 Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
+  $('#timerDisplay').show().text('60');
   setTimer();
 });
 
@@ -81,9 +85,10 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
 
 const playAgain = (e) => {
   console.log(e.currentTarget);
-  clearInterval();
+  clearInterval(timerInterval);
   time = 60;
   timerProgress = 60;
+  $('#timerDisplay').text('60');
   // let score = 0;
   setTimer();
   reset();
@@ -106,7 +111,7 @@ const playAgain = (e) => {
 
 const playNow = (e) => {
   console.log(e.currentTarget);
-  clearInterval();
+  clearInterval(timerInterval);
   time = 60;
   timerProgress = 60;
   setTimer();
@@ -123,12 +128,13 @@ const progressBarTimer = () => {
   const status = document.getElementById('status');
   bar.value = timerProgress;
   timerProgress--;
+  document.getElementById('timerDisplay').innerText = time;
 }
 
 //--------------------------------  TIMER  ---------------------------------
 
 const setTimer = () => {
-  const timer = setInterval(() => {
+  timerInterval = setInterval(() => {
     time--;
     progressBarTimer();
 
@@ -136,7 +142,7 @@ const setTimer = () => {
 
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
       reset();
-      clearInterval(timer);
+      clearInterval(timerInterval);
     }
 
     //-------------------------  FOR TWO PLAYER GAME  --------------------------
@@ -144,14 +150,14 @@ const setTimer = () => {
     //1st go 'round: both players are alive.
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == true)) {
       reset();
-      clearInterval(timer);
+      clearInterval(timerInterval);
       playNow();
     }
 
     //player 2, 2nd go 'round.
     if ((time === 0) && (player1IsAlive == false) && (player2IsAlive == true)) {
       reset();
-      clearInterval(timer);
+      clearInterval(timerInterval);
     }
   }, 1000);
 }
@@ -341,7 +347,7 @@ const animate = () => {
 
   if (time === 0) {
     console.log('time is 0');
-    clearInterval();
+    clearInterval(timerInterval);
     endOfGameCheck(animationFun); //stops the animation.
     // cancelAnimationFrame(animationFun); cancels the request animation function from line 325.
   };
