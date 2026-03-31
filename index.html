@@ -15,15 +15,23 @@
 
 <body>
   <header>
-    <h1>Mopac Dodger</h1>
-    <h2><span id='player1Score' aria-live="polite" aria-atomic="true" ></span>
-    <span id='player2Score' aria-live="polite" aria-atomic="true"></span>
+    <h1>Traffic Dodger</h1>
+    <h2>
+      <span id='player1Score' aria-live="polite" aria-atomic="true"></span>
+      <span id='player2Score' aria-live="polite" aria-atomic="true"></span>
     </h2>
-      <progress id='progressBar' value='60' max= '60' min='0'></progress>
-      <span id='timerDisplay'>60</span>
+      <progress id='progressBar' value='90' max= '90' min='0' aria-label=" "Time remaining"></progress>
+      <span id='timerDisplay' aria-live="off"></span>  <!-- updated below in JS -->
+      <span id='timerDisplay'>90</span>
       <span id='status'></span>
   </header>
 
+   <div id="gameAnnouncer"
+       role="status"
+       aria-live="polite"
+       aria-atomic="true"
+       class="sr-only">
+  </div>
 
 
   <canvas id='canvas' width=1440 height=620
