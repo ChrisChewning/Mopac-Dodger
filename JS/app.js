@@ -3,6 +3,7 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
 //empty variables
@@ -11,8 +12,8 @@ let player2IsAlive;
 
 let player1Score = 0;
 let player2Score = 0;
-let time = 60; //test with 3 or 8.
-let timerProgress = 60;
+let time = 90; 
+let timerProgress = 90;
 let timerInterval;
 $('#progressBar').hide();
 $('#timerDisplay').hide();

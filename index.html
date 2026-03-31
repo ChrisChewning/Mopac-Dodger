@@ -16,8 +16,9 @@
 <body>
   <header>
     <h1>Mopac Dodger</h1>
-    <h2><span id='player1Score'></span>
-      <span id='player2Score'></span></h2>
+    <h2><span id='player1Score' aria-live="polite" aria-atomic="true" ></span>
+    <span id='player2Score' aria-live="polite" aria-atomic="true"></span>
+    </h2>
       <progress id='progressBar' value='60' max= '60' min='0'></progress>
       <span id='timerDisplay'>60</span>
       <span id='status'></span>
@@ -25,13 +26,21 @@
 
 
 
-  <canvas id='canvas' width=1440 height=620></canvas>
+  <canvas id='canvas' width=1440 height=620
+          role="application"
+          aria-label="Mopac Dodger game area. Use arrow keys to move the taco
+  truck."
+          tabindex="0">
+  </canvas>
 
   <footer></footer>
 
   <div id="container">
 
-    <div class='modal' id='onStartModal'>
+    <div class='modal' id='onStartModal'
+        role="dialog"
+       aria-modal="true"
+       aria-labelledby="instructions">
       <h4 id='instructions'>Make it to the other side without crashing!!</h4>
       <button id='onePlayerBtn'>1 Player</button>
       <button id='twoPlayerBtn'>2 Players</button>
