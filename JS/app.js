@@ -4,6 +4,16 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 
+//------------------------------  GAME EVENT HELPER  ---------------------------------
+const announce = (message, urgent = false) => {
+    const el = document.getElementById('gameAnnouncer');
+    el.setAttribute('role', urgent ? 'alert' : 'status');
+    el.setAttribute('aria-live', urgent ? 'assertive' : 'polite');
+    el.textContent = '';                    // clear first to re-trigger
+    setTimeout(() => el.textContent = message, 50);
+  };
+
+
 // --------------------------- GLOBAL VARIABLES --------------------------------
 
 //empty variables
@@ -139,6 +149,15 @@ const setTimer = () => {
     time--;
     progressBarTimer();
 
+ //announce at 30s, 10s, 5s only
+  if (time === 30 || time === 10 || time <= 5) {
+    announce(time + ' seconds remaining');
+  }
+
+ // Game over
+  announce('Game over! ' +  'Final score: ' + player1Score), true;
+
+
     //-------------------------  FOR ONE PLAYER GAME  --------------------------
 
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
@@ -264,6 +283,7 @@ const detectCollision = () => {
   for (let i = 0; i < vehicles.length; i++) {
     if (sprite.xPosition < vehicles[i].xPosition + vehicles[i].width && sprite.xPosition + sprite.width > vehicles[i].xPosition && sprite.yPosition < vehicles[i].yPosition + vehicles[i].height && sprite.yPosition + sprite.height > vehicles[i].yPosition) {
       reset();
+      announce('Hit! Back to start.');
       // console.log('oh, hai mark!');
     }
   }
@@ -306,6 +326,8 @@ const animate = () => {
     player1Score++;
     reset();
     $('#player1Score').text('Your Score: ' + player1Score);
+    announce('Score: ' + player1Score);
+
   }
 
   //-------------------  ADD POINTS: TWO PLAYER GAME  --------------------
