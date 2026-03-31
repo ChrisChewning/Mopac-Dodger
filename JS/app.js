@@ -55,6 +55,19 @@ $('#twoPlayerBtn').on('click', (e) => {
   setTimer();
 });
 
+
+//----------------------------  BUTTON EVENT LISTENERS  ---------------------------------
+
+document.getElementById('btnRight').addEventListener('click', () => {         
+  sprite.xPosition += 50; });                                                 
+  document.getElementById('btnLeft').addEventListener('click',  () => {         
+  sprite.xPosition -= 10; });                                                 
+  document.getElementById('btnUp').addEventListener('click',    () => {         
+  sprite.yPosition -= 50; });                                                   
+  document.getElementById('btnDown').addEventListener('click',  () => {       
+  sprite.yPosition += 10; });     
+
+
 //----------------------  CREATE END OF GAME MODALS  -------------------------
 
 // animationFun not func
@@ -346,26 +359,17 @@ const animate = () => {
     $('#player2Score').text('Player 2 Score: ' + player2Score);
   }
 
-  //-------------------------  MAKE SPRITE MOVE  -------------------------
+//-------------------------  MAKE SPRITE MOVE  -------------------------
 
-  const moveSprite = (e) => {
-    const moveSprite = (e) => {
-    if (e.keyCode == 39 || e.keyCode == 68) { sprite.xPosition += 50; } // Right / D                                                                          
-    if (e.keyCode == 37 || e.keyCode == 65) { sprite.xPosition -= 50; } // Left / A                                                                           
-    if (e.keyCode == 38 || e.keyCode == 87) { sprite.yPosition -= 50; } // Up / W                                                                             
-    if (e.keyCode == 40 || e.keyCode == 83) { sprite.yPosition += 10; } // Down / S                                                                           
+document.onkeydown = (e) => {                                               
+    if (e.key === 'ArrowRight') { sprite.xPosition += 50; }                     
+    if (e.key === 'ArrowLeft')  { sprite.xPosition -= 10; }                   
+    if (e.key === 'ArrowUp')    { sprite.yPosition -= 50; }                     
+    if (e.key === 'ArrowDown')  { sprite.yPosition += 10; }                     
+  }; 
   }   
-  }
   document.onkeydown = moveSprite; //do not put () here.
 
-
-//------------------------  ADD BUTTONS FOR ACCESSIBILITY -------------------------
-   <div id="dpad" role="group" aria-label="Movement controls">
-    <button id="btnUp"    aria-label="Move up">▲</button>
-    <button id="btnLeft"  aria-label="Move left">◄</button>
-    <button id="btnDown"  aria-label="Move down">▼</button>
-    <button id="btnRight" aria-label="Move right">►</button>
-  </div>
 
   //------------------------  END OF GAME CHECKS -------------------------
 
@@ -376,7 +380,6 @@ const animate = () => {
     // cancelAnimationFrame(animationFun); cancels the request animation function from line 325.
   };
 
-}
 
 //--------------------------  DRAWS IT ALL OUT  ------------------------
 

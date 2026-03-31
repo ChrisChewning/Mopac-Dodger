@@ -26,6 +26,8 @@
       <span id='status'></span>
   </header>
 
+
+
    <div id="gameAnnouncer"
        role="status"
        aria-live="polite"
@@ -33,6 +35,12 @@
        class="sr-only">
   </div>
 
+   <div id="dpad" role="group" aria-label="Movement controls">
+    <button id="btnUp"    aria-label="Move up">▲</button>
+    <button id="btnLeft"  aria-label="Move left">◄</button>
+    <button id="btnDown"  aria-label="Move down">▼</button>
+    <button id="btnRight" aria-label="Move right">►</button>
+  </div>
   
   <canvas id='canvas' width=1440 height=620
           role="application"
