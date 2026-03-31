@@ -358,6 +358,15 @@ const animate = () => {
   }
   document.onkeydown = moveSprite; //do not put () here.
 
+
+//------------------------  ADD BUTTONS FOR ACCESSIBILITY -------------------------
+   <div id="dpad" role="group" aria-label="Movement controls">
+    <button id="btnUp"    aria-label="Move up">▲</button>
+    <button id="btnLeft"  aria-label="Move left">◄</button>
+    <button id="btnDown"  aria-label="Move down">▼</button>
+    <button id="btnRight" aria-label="Move right">►</button>
+  </div>
+
   //------------------------  END OF GAME CHECKS -------------------------
 
   if (time === 0) {
