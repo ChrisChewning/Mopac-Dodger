@@ -43,6 +43,7 @@ $('#onePlayerBtn').on('click', (e) => {
 });
 
 $('#twoPlayerBtn').on('click', (e) => {
+  document.getElementById('canvas').focus();                                    
   player1IsAlive = true;
   player2IsAlive = true;
   animate();
@@ -348,22 +349,12 @@ const animate = () => {
   //-------------------------  MAKE SPRITE MOVE  -------------------------
 
   const moveSprite = (e) => {
-    if (e.keyCode == 39) { //R
-      sprite.xPosition += 50;
-      // console.log(sprite);
-    }
-    if (e.keyCode == 37) { //L
-      sprite.xPosition -= 10;
-      // console.log(sprite);
-    }
-    if (e.keyCode == 38) { //UP
-      sprite.yPosition -= 50;
-      // console.log(sprite);
-    }
-    if (e.keyCode == 40) { //DOWN
-      sprite.yPosition += 10;
-      // console.log(sprite);
-    }
+    const moveSprite = (e) => {
+    if (e.keyCode == 39 || e.keyCode == 68) { sprite.xPosition += 50; } // Right / D                                                                          
+    if (e.keyCode == 37 || e.keyCode == 65) { sprite.xPosition -= 50; } // Left / A                                                                           
+    if (e.keyCode == 38 || e.keyCode == 87) { sprite.yPosition -= 50; } // Up / W                                                                             
+    if (e.keyCode == 40 || e.keyCode == 83) { sprite.yPosition += 10; } // Down / S                                                                           
+  }   
   }
   document.onkeydown = moveSprite; //do not put () here.
 
