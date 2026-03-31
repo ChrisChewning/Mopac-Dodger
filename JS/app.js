@@ -37,7 +37,7 @@ $('#onePlayerBtn').on('click', (e) => {
   $('#player1Score').text('Your Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
-  $('#timerDisplay').show().text('60');
+  // $('#timerDisplay').show().text('60');
   setTimer();
 });
 
@@ -384,7 +384,8 @@ const endOfGameCheck = (animationFun) => {
   //ONE PLAYER GAME
   if (player1IsAlive && !player2IsAlive) {
     cancelAnimationFrame(animationFun);
-    const p1Modal = createHTML('p1', 'Player 1 Survived MoPac!', ['Play Again'], playAgain);
+    const p1Modal = createHTML('p1', 'Great job!',) 
+    // ['Play Again'], playAgain);
     console.log('this is a string');
   }
 
