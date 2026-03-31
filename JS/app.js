@@ -31,13 +31,14 @@ $('#timerDisplay').hide();
 // ---------------------------- PLAYER OPTIONS ---------------------------------
 
 $('#onePlayerBtn').on('click', (e) => {
+  document.getElementById('canvas').focus();                                    
   player1IsAlive = true;
   player2IsAlive = false;
   animate();
   $('#player1Score').text('Your Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
-  // $('#timerDisplay').show().text('60');
+  // $('#timerDisplay').show().text('90');
   setTimer();
 });
 
@@ -49,7 +50,7 @@ $('#twoPlayerBtn').on('click', (e) => {
   $('#player2Score').text('Player 2 Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
-  $('#timerDisplay').show().text('60');
+  $('#timerDisplay').show().text('90');
   setTimer();
 });
 
@@ -97,9 +98,9 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
 const playAgain = (e) => {
   console.log(e.currentTarget);
   clearInterval(timerInterval);
-  time = 60;
-  timerProgress = 60;
-  $('#timerDisplay').text('60');
+  time = 90;
+  timerProgress = 90;
+  $('#timerDisplay').text('90');
   // let score = 0;
   setTimer();
   reset();
@@ -123,8 +124,8 @@ const playAgain = (e) => {
 const playNow = (e) => {
   console.log(e.currentTarget);
   clearInterval(timerInterval);
-  time = 60;
-  timerProgress = 60;
+  time = 90;
+  timerProgress = 90;
   setTimer();
   reset();
   animate();
