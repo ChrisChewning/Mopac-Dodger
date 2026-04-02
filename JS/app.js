@@ -6,9 +6,9 @@ const c = canvas.getContext('2d');
 
 //------------------------------  GAME EVENT HELPER  ---------------------------------
 const announce = (message, urgent = false) => {
-    const el = document.getElementById('gameAnnouncer');
-    el.setAttribute('role', urgent ? 'alert' : 'status');
-    el.setAttribute('aria-live', urgent ? 'assertive' : 'polite');
+    const el = document.getElementById(urgent ? 'gameAnnouncerUrgent' :
+  'gameAnnouncer');                                                             
+  //  el.setAttribute('role', urgent ? 'alert' : 'status'); don't need this line since we have polite and urgent SR usage.
     el.textContent = '';                    // clear first to re-trigger
     setTimeout(() => el.textContent = message, 50);
   };
@@ -22,11 +22,15 @@ let player2IsAlive;
 
 let player1Score = 0;
 let player2Score = 0;
-let time = 90; 
-let timerProgress = 90;
+let time = 8; 
+let timerProgress = 8;
 let timerInterval;
 $('#progressBar').hide();
 $('#timerDisplay').hide();
+$('#dpad').hide();                                                            
+let animationId;
+
+
 
 // ---------------------------- PLAYER OPTIONS ---------------------------------
 
@@ -38,6 +42,7 @@ $('#onePlayerBtn').on('click', (e) => {
   $('#player1Score').text('Your Score: ');
   $('#onStartModal').hide();
   $('#progressBar').show();
+  $('#dpad').show();
   // $('#timerDisplay').show().text('90');
   setTimer();
 });
@@ -70,8 +75,6 @@ document.getElementById('btnRight').addEventListener('click', () => {
 
 //----------------------  CREATE END OF GAME MODALS  -------------------------
 
-// animationFun not func
-
 const createHTML = (id, innerText, buttonTexts, animationFun) => {
 
   //MODAL
@@ -93,7 +96,6 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
     myButton.id = id + 'button' + i;
     myButton.className = 'modalButton';
     endOfGameModals.append(myButton);
-    console.log(myButton, 'please load buttonsss!');
 
     if (animationFun) {
       console.log('hi');
@@ -111,6 +113,7 @@ const createHTML = (id, innerText, buttonTexts, animationFun) => {
 
 const playAgain = (e) => {
   console.log(e.currentTarget);
+  cancelAnimationFrame(animationId); // stop existing loop first              
   clearInterval(timerInterval);
   time = 90;
   timerProgress = 90;
@@ -133,12 +136,11 @@ const playAgain = (e) => {
   }
 }
 
-  
-
 const playNow = (e) => {
   console.log(e.currentTarget);
+   cancelAnimationFrame(animationId); // stop existing loop first              
   clearInterval(timerInterval);
-  time = 90;
+  time = 8;
   timerProgress = 90;
   setTimer();
   reset();
@@ -146,6 +148,13 @@ const playNow = (e) => {
   $(e.currentTarget).parent().detach();
   player1IsAlive = false;
 }
+
+  const openModal = (modalId) => {                                              
+    const modal = document.getElementById(modalId);
+    const firstBtn = modal.querySelector('button');                             
+    if (firstBtn) firstBtn.focus();                                             
+  };                                                                            
+  openModal('onStartModal');  
 
 //------------------------------  TIMER BAR  ---------------------------------
 
@@ -165,17 +174,15 @@ const setTimer = () => {
     progressBarTimer();
 
  //announce at 30s, 10s, 5s only
-  if (time === 30 || time === 10 || time <= 5) {
+  if (time === 60 || time === 30 || time === 10 || time <= 5) {
+    console.log('time check!');
     announce(time + ' seconds remaining');
   }
-
- // Game over
-  announce('Game over! ' +  'Final score: ' + player1Score), true;
-
 
     //-------------------------  FOR ONE PLAYER GAME  --------------------------
 
     if ((time === 0) && (player1IsAlive == true) && (player2IsAlive == false)) {
+      console.log('time is 0')
       reset();
       clearInterval(timerInterval);
     }
@@ -299,7 +306,7 @@ const detectCollision = () => {
     if (sprite.xPosition < vehicles[i].xPosition + vehicles[i].width && sprite.xPosition + sprite.width > vehicles[i].xPosition && sprite.yPosition < vehicles[i].yPosition + vehicles[i].height && sprite.yPosition + sprite.height > vehicles[i].yPosition) {
       reset();
       announce('Hit! Back to start.');
-      // console.log('oh, hai mark!');
+      console.log('oh, hai mark!');
     }
   }
 }
@@ -307,7 +314,7 @@ const detectCollision = () => {
 //----------------------  BEGIN ANIMATION FUNCTION  ------------------------
 const animate = () => {
   c.clearRect(0, 0, 1600, 650);
-  const animationFun = requestAnimationFrame(animate); //added a variable animationFun so we can save the result from requestAnimationFrame to have the option to stop it. originally: requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(animate); //added a variable animationId so we can save the result from requestAnimationFrame to have the option to stop it. originally: requestAnimationFrame(animate);
   c.drawImage(backgroundImage, 0, 110, 1600, 400);
   c.drawImage(spriteImage, sprite.xPosition, sprite.yPosition, sprite.width, sprite.height)
 
@@ -367,53 +374,55 @@ document.onkeydown = (e) => {
     if (e.key === 'ArrowUp')    { sprite.yPosition -= 50; }                     
     if (e.key === 'ArrowDown')  { sprite.yPosition += 10; }                     
   }; 
-  }   
-  document.onkeydown = moveSprite; //do not put () here.
-
+ 
 
   //------------------------  END OF GAME CHECKS -------------------------
 
   if (time === 0) {
     console.log('time is 0');
     clearInterval(timerInterval);
-    endOfGameCheck(animationFun); //stops the animation.
-    // cancelAnimationFrame(animationFun); cancels the request animation function from line 325.
+    cancelAnimationFrame(animationId); //cancels the request animation function.
+    announce('Game over! Final score: ' + player1Score, true);
+    setTimeout(() => endOfGameCheck(), 1500);                                   
+  }
   };
+
 
 
 //--------------------------  DRAWS IT ALL OUT  ------------------------
 
-const endOfGameCheck = (animationFun) => {
+const endOfGameCheck = () => {
 
   //ONE PLAYER GAME
   if (player1IsAlive && !player2IsAlive) {
-    cancelAnimationFrame(animationFun);
-    const p1Modal = createHTML('p1', 'Great job!',) 
-    // ['Play Again'], playAgain);
-    console.log('this is a string');
+    clearInterval(timerInterval);                                               
+    const p1Modal = createHTML('p1', 'Great job!', ['Play Again'], playAgain);
+     openModal('p1');                                                          
+    console.log('player 1 game over');
   }
 
   //TWO PLAYER GAME: PERSON 2 TURN.
   if (player1IsAlive && player2IsAlive) {
-    cancelAnimationFrame(animationFun);
+    cancelAnimationFrame(animationId);
     const tieModal = createHTML('p2', 'Player 2\'s Turn!', ['Play Now'], playNow);
   }
 
   //TWO PLAYER GAME: TIE
   if (!player1IsAlive && player2IsAlive && player1Score == player2Score) {
-    cancelAnimationFrame(animationFun);
+    cancelAnimationFrame(animationId);
     const p2tModal = createHTML('tiebutton0', 'Players Tied!', ['Play Again'], playAgain);
   }
 
   //TWO PLAYER GAME: P1 WINS
   if (!player1IsAlive && player1Score > player2Score) {
-    cancelAnimationFrame(animationFun);
+    cancelAnimationFrame(animationId);
     const p1wModal = createHTML('p1w', 'Player 1 Wins! You Survived MoPac & Its Many Enemies!', ['Play Again'], playAgain);
   }
 
   //TWO PLAYER GAME: P2 WINS
   if (!player1IsAlive && player2Score > player1Score) {
-    cancelAnimationFrame(animationFun);
+    cancelAnimationFrame(animationId);
     const p2wModal = createHTML('p2w', 'Player 2 Wins! You Survived MoPac & Its Many Enemies!', ['Play Again'], playAgain);
   }
 }
+

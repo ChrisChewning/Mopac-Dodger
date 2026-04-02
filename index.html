@@ -16,31 +16,44 @@
 <body>
   <header>
     <h1>Traffic Dodger</h1>
-    <h2>
-      <span id='player1Score' aria-live="polite" aria-atomic="true"></span>
-      <span id='player2Score' aria-live="polite" aria-atomic="true"></span>
-    </h2>
-      <progress id='progressBar' value='90' max= '90' min='0' aria-label=" "Time remaining"></progress>
-      <span id='timerDisplay' aria-live="off"></span>  <!-- updated below in JS -->
-      <!-- <span id='timerDisplay'>90</span> -->
-      <span id='status'></span>
+      <div id="header-top">                                                       
+      <div id="score-timer">
+        <h2><span id='player1Score'></span><span id='player2Score'></span></h2> 
+        <progress id='progressBar' value='90' max='90' min='0'></progress>      
+        <span id='timerDisplay'>90</span>
+      </div>                                                                    
+      <div id="dpad" role="group" aria-label="Movement controls">
+        <button id="btnUp"    aria-label="Move up">▲</button>                   
+        <button id="btnLeft"  aria-label="Move left">◄</button>
+        <button id="btnDown"  aria-label="Move down">▼</button>                 
+        <button id="btnRight" aria-label="Move right">►</button>
+      </div>                                                                    
+    </div>        
+  </header>  
   </header>
 
 
 
-   <div id="gameAnnouncer"
-       role="status"
+  <!-- polite: timer, score, collision -->
+  <div id="gameAnnouncer"                                                       
+       role="status"     
        aria-live="polite"
-       aria-atomic="true"
-       class="sr-only">
-  </div>
+       aria-atomic="true"                                                       
+       class="sr-only"></div>
+                                                                                
+  <!-- assertive: game over only -->
+  <div id="gameAnnouncerUrgent"     
+       role="alert"            
+       aria-live="assertive"                                                    
+       aria-atomic="true"   
+       class="sr-only"></div>   
 
-   <div id="dpad" role="group" aria-label="Movement controls">
+   <!-- <div id="dpad" role="group" aria-label="Movement controls">
     <button id="btnUp"    aria-label="Move up">▲</button>
     <button id="btnLeft"  aria-label="Move left">◄</button>
     <button id="btnDown"  aria-label="Move down">▼</button>
     <button id="btnRight" aria-label="Move right">►</button>
-  </div>
+  </div> -->
   
   <canvas id='canvas' width=1440 height=620
           role="application"

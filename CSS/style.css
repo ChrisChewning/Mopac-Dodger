@@ -93,11 +93,41 @@ footer {
     border: 0;
   }
 
-#dpad {
+/* #dpad {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
-}
+} */
+
+#header-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;                                                                
+  }
+                                                                                
+
+   #score-timer {                                                                
+    display: flex;
+    align-items: center;                                                        
+    gap: 16px;
+    margin-left: auto;
+    padding: 0 20px;                                                                 
+  }
+
+  #dpad {         
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 0 20px;
+  }
+  #dpad button {
+    width: 42px;                                                                
+    height: 42px;                                                               
+    padding: 0;
+    font-size: 14px;                                                            
+    border-radius: 6px;
+  }   
